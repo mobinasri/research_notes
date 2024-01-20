@@ -64,7 +64,7 @@ slurmstepd-phoenix-07: error: Detected 2 oom-kill event(s) in StepId=1683797.bat
 Therefore I increased the memory size to 256 and reran the script after commenting all lines expect the last command. 
 
 #### Runtimes
-vg2maf is working fine for about 22 hours so far but not finished yet. Here is the most update log from slurm.
+vg2maf is working fine for about 22 hours so far but not finished yet. Here is the most recently updated log from slurm.
 ```
 cat gbz_to_maf.1685027.log
 /private/groups/patenlab/masri/internship/convert_hprc_to_maf
@@ -77,7 +77,7 @@ Thu Jan 18 05:54:04 PM PST 2024
 [vg2maf]: Loaded GAM index
 [vg2maf]: Converting chain 0
 ```
-This long runtime is a bit concerning to me. Other than vg2maf all previous steps for converting gbz to vg, gbz to gam and vg to dist are also time consuming. I think maybe I have to try a personalized pangenome with 4 or 8 haplotypes instead of the whole HPRC graph. This way I can have a better sense of how long it would take for a typical personlized pangenome.
+This long runtime for vg2maf is a bit concerning to me. Other than vg2maf all previous steps for converting gbz to vg, gbz to gam and vg to dist are also time consuming. I think maybe I have to try a personalized pangenome with 4 or 8 haplotypes instead of the whole HPRC graph. This way I can have a better sense of how long it would take for a typical personlized pangenome.
 
 | From | Convert To / Task    | Time (hrs:mins)    |
 | :---:   | :---: | :---: |
