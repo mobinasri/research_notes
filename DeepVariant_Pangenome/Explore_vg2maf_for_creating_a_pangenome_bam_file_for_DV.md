@@ -37,4 +37,52 @@ sbatch gbz_to_maf.bash $PWD/vg_v1.53.0 $PWD/vg2maf_0369bf2b4b87ec4daed9848fd4e5b
 
 ```
 
+### Comment 2 : 01/19/2024
 
+first I ran the script linked in [comment 1](https://github.com/mobinasri/research_notes/blob/main/DeepVariant_Pangenome/Explore_vg2maf_for_creating_a_pangenome_bam_file_for_DV.md#comment-1-01192024) with 128 Gb memory
+```
+--mem=128gb
+```
+It could create all vg, gam and dist files but crashed in the middle of creating MAF. Here is error log from slurm.
+```
+masri@phoenix:/private/groups/patenlab/masri/internship/convert_hprc_to_maf$ cat gbz_to_maf.1683797.log
+/private/groups/patenlab/masri/internship/convert_hprc_to_maf
+phoenix-07.prism
+Wed Jan 17 07:55:28 PM PST 2024
+[Wed Jan 17 07:55:28 PM PST 2024] Convert hprc-v1.1-mc-grch38.gbz hprc-v1.1-mc-grch38.vg
+[Wed Jan 17 09:20:07 PM PST 2024] Convert hprc-v1.1-mc-grch38.gbz to hprc-v1.1-mc-grch38.gam
+[Thu Jan 18 12:27:26 AM PST 2024] Sort and index hprc-v1.1-mc-grch38.gam
+ break into sorted chunks       [=======================]100.0%
+ merge 596 files                [=======================]100.0%
+[Thu Jan 18 09:48:55 AM PST 2024] Create hprc-v1.1-mc-grch38.dist
+[Thu Jan 18 01:31:15 PM PST 2024] Create hprc-v1.1-mc-grch38.maf
+[vg2maf]: Loaded graph
+/var/lib/slurm/slurmd/job1683797/slurm_script: line 60: 1728046 Killed                  ${VG2MAF_BIN} ${DIRNAME}/${PREFIX}.vg -d ${DIRNAME}/${PREFIX}.dist -r ${REF_SAMPLE} -g ${DIRNAME}/${PREFIX}.sort.gam -p --threads 8 > ${DIRNAME}/${PREFIX}.maf
+slurmstepd-phoenix-07: error: Detected 2 oom-kill event(s) in StepId=1683797.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.
+```
+
+Therefore I increased the memory size to 256 and reran the script after commenting all lines expect the last command. 
+
+#### Runtimes
+vg2maf is working fine for about 22 hours so far but not finished yet. Here is the most update log from slurm.
+```
+cat gbz_to_maf.1685027.log
+/private/groups/patenlab/masri/internship/convert_hprc_to_maf
+phoenix-20.prism
+Thu Jan 18 05:54:04 PM PST 2024
+[Thu Jan 18 05:54:04 PM PST 2024] Create hprc-v1.1-mc-grch38.maf
+[vg2maf]: Loaded graph
+[vg2maf]: Applied position overlay
+[vg2maf]: Loaded distance index
+[vg2maf]: Loaded GAM index
+[vg2maf]: Converting chain 0
+```
+This long runtime is a bit concerning to me. Other than vg2maf all previous steps for converting gbz to vg, gbz to gam and vg to dist are also time consuming. I think maybe I have to try a personalized pangenome with 4 or 8 haplotypes instead of the whole HPRC graph. This way I can have a better sense of how long it would take for a typical personlized pangenome.
+
+| From | Convert To / Task    | Time (hrs:mins)    |
+| :---:   | :---: | :---: |
+| GBZ | VG   | 1:25   |
+| GBZ | GAM   | 3:00   |
+| GAM | sort and index   | 9:20  |
+| VG | DIST   | 4:45   |
+| Total |    | 18:30  |
