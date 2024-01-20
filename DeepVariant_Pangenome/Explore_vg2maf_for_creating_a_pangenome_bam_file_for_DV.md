@@ -11,8 +11,8 @@ He said that I should use the devlopment branch for now. We need this conversion
 separate personalized pangenome per sample) and its runtime will add up to the total runtime for the variant calling process. We can say that it's 
 like a preprocessing step.
 
-I wrote down a bash script that takes a gbz file and uses it to create vg, gam, dist files which are needed for creating a MAF file. This is the link to the 
-bash script.
+I wrote down a bash script that takes a gbz file and uses it to create vg, gam, dist files which are needed for creating a MAF file. This is the link to the bash script.
+https://github.com/mobinasri/research_notes/blob/main/DeepVariant_Pangenome/files/gbz_to_maf.bash
 
 ```
 # go to working directory
