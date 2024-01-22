@@ -86,3 +86,20 @@ This long runtime for vg2maf is a bit concerning to me. Other than vg2maf all pr
 | GAM | sort and index   | 9:20  |
 | VG | DIST   | 4:45   |
 | Total |    | 18:30  |
+
+
+### Comment 3: 01/21/2024
+
+My previous run for vg2maf is terminated on pheonix due to time limit after 3 days of running:
+
+```
+phoenix-20.prism
+Thu Jan 18 05:54:04 PM PST 2024
+[Thu Jan 18 05:54:04 PM PST 2024] Create hprc-v1.1-mc-grch38.maf
+[vg2maf]: Loaded graph
+[vg2maf]: Applied position overlay
+[vg2maf]: Loaded distance index
+[vg2maf]: Loaded GAM index
+[vg2maf]: Converting chain 0
+slurmstepd-phoenix-20: error: *** JOB 1685027 ON phoenix-20 CANCELLED AT 2024-01-21T17:54:05 DUE TO TIME LIMIT ***
+```
