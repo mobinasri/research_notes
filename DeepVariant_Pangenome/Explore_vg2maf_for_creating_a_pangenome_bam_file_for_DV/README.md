@@ -1,3 +1,4 @@
+## Explore vg2maf for creating a pangenome bam file for DV
 ### Comment 1: 01/19/2024
 Personalized pangenomes has shown to be useful for acheiving higher accuracy in mapping reads to pangenome graphs, which can then helps variant calling for 
 hard cases especially the ones suffering from read mismappings. I want to add the haplotype information from personalized pangenome to the DeepVariant examples, and
