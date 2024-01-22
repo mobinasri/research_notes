@@ -103,3 +103,5 @@ Thu Jan 18 05:54:04 PM PST 2024
 [vg2maf]: Converting chain 0
 slurmstepd-phoenix-20: error: *** JOB 1685027 ON phoenix-20 CANCELLED AT 2024-01-21T17:54:05 DUE TO TIME LIMIT ***
 ```
+
+TODO: run haplotype sampling and then run the steps above to see the difference in runtime.
