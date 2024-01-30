@@ -3,7 +3,7 @@
 ### Comment 1 : 01/30/2023
 
 #### Map maternal haplotype against paternal and a create a PAF that can be used by Falsifier
-
+I made two csv files for running this alignment ([data_table.csv](https://github.com/mobinasri/research_notes/blob/main/Flagger_HG002_T2T/Run_Falsifier_for_v1.0.1/files/data_table.csv) and [input_mapping.csv](https://github.com/mobinasri/research_notes/blob/main/Flagger_HG002_T2T/Run_Falsifier_for_v1.0.1/files/input_mapping.csv))
 ```
 USER_NAME="masri"
 EMAIL="masri@ucsc.edu"
