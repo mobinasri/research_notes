@@ -1,0 +1,2 @@
+sample_id,maternal_fasta_gz,paternal_fasta_gz
+HG002_v1.0.1,"https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/HG002/assemblies/hg002v1.0.1.mat.fasta.gz","https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/HG002/assemblies/hg002v1.0.1.pat.fasta.gz"

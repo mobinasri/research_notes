@@ -1,0 +1,10 @@
+input,type,value
+asm2asmAlignment.queryAssemblyFastaGz,scalar,$input.maternal_fasta_gz
+asm2asmAlignment.alignmentBam.threadCount,scalar,32
+asm2asmAlignment.refAssemblyFastaGz,scalar,$input.paternal_fasta_gz
+asm2asmAlignment.alignmentBam.memSize,scalar,64
+asm2asmAlignment.alignmentBam.diskSize,scalar,128
+asm2asmAlignment.preset,scalar,"asm5"
+asm2asmAlignment.suffix,scalar,"mat_to_pat"
+asm2asmAlignment.alignmentBam.options,scalar,"--eqx --cs -L"
+asm2asmAlignment.aligner,scalar,"minimap2"
