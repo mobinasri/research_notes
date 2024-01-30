@@ -1,0 +1,2 @@
+sample_id,read_files
+HG003_HPRC_v1.1.hap_sampled,"['gs://pepper-deepvariant/seeskand/dv_training/HG003_35x_merged.positionsorted.bam']"
