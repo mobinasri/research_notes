@@ -53,3 +53,18 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --input_json_dir ${INPUT_JSON_DIR}
 
 ```
+
+### Comment 2 : 01/30/2023
+
+After the alignment job is done I made a PAF file from BAM file:
+
+```
+# ssh into a node after being allowed by Slurm
+salloc  -c 8 --mem 32G bash -c 'ssh -Y $(scontrol show hostnames | head -n 1)'
+
+# get the docker with paftools
+docker run -v$PWD:$PWD -it -u$(id -u):$(id -g) mobinasri/long_read_aligner:v0.3.0
+
+# convert bam to paf
+k8 /home/apps/minimap2-2.24/misc/paftools.js sam2paf <(samtools view -h /private/groups/patenlab/masri/flagger/T2T/v1.0.1/mat_to_pat_alignment/asm2asm_aligner_output_jsons/HG002_v1.0.1/asm2asm_aligner_outputs/hg002v1.0.1.mat.mat_to_pat.sorted.bam ) >  /private/groups/patenlab/masri/flagger/T2T/v1.0.1/mat_to_pat_alignment/asm2asm_aligner_output_jsons/HG002_v1.0.1/asm2asm_aligner_outputs/hg002v1.0.1.mat.mat_to_pat.sorted.paf
+```
