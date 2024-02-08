@@ -309,5 +309,36 @@ k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG041
 k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_pat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap1.polished.HG04115_pat_polished_to_raw.sorted.bam) > HG04115_pat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap1.polished.HG04115_pat_polished_to_raw.sorted.pri.paf
 
 # for maternal to paternal raw
-k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_polished_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_polished_mat_to_pat.sorted.bam) > HG04115_polished_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_polished_mat_to_pat.sorted.pri.paf
+k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_raw_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_pat.sorted.bam) > HG04115_raw_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_pat.sorted.pri.paf
+```
+
+#### Get FP kmer Bed files and polisher output from Mira's directory
+
+Copy merqury files
+```
+mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/raw
+cp /private/groups/hprc/polishing/batch3/hprc_polishing_QC/HG04115/hprc_polishing_QC_outputs/HG04115.merqury.tar.gz /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/raw/HG04115.merqury.tar.gz
+mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/polished
+cp /private/groups/hprc/polishing/batch3/hprc_polishing_QC/HG04115/hprc_polishing_QC_outputs/HG04115.polished.merqury.tar.gz /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/polished/HG04115.polished.merqury.tar.gz
+```
+
+Extract files
+```
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/polished/
+tar -zvxf HG04115.polished.merqury.tar.gz 
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/raw
+tar -xvzf HG04115.merqury.tar.gz 
+```
+
+Merged fp kmer tracks with counts
+```
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/raw
+cat HG04115.merqury.asm_only.bed | bedtools merge -o count -c 1 > ../HG04115.hap1.raw.fp_kmers.merged_count.bed
+cat HG04115.merqury.altHap_only.bed | bedtools merge -o count -c 1 > ../HG04115.hap2.raw.fp_kmers.merged_count.bed
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/polished/
+cat HG04115.polished.merqury.asm_only.bed | bedtools merge -o count -c 1 > ../HG04115.hap1.polished.fp_kmers.merged_count.bed
+cat HG04115.polished.merqury.altHap_only.bed | bedtools merge -o count -c 1 > ../HG04115.hap2.polished.fp_kmers.merged_count.bed
+
 ```
