@@ -159,3 +159,129 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --sample_csv  ${INPUT_DATA_TABLE_CSV} \
             --input_json_dir ${INPUT_JSON_DIR}
 ```
+
+### Comment 2 : 02/07/2024
+
+#### Make asm2asm alignments
+
+We need three assembly to assembly alignments for this analysis:
+- polished pat to raw pat
+- polished mat to raw mat
+- raw mat to raw pat
+
+`data_table.csv`
+```
+sample_id,ref_assembly_fasta_gz,query_assembly_fasta_gz
+HG04115_pat_polished_to_raw,"/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.pat.fa.gz","/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115_Hap1.polished.fa.gz"
+HG04115_mat_polished_to_raw,"/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.mat.fa.gz","/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115_Hap2.polished.fa.gz"
+HG04115_polished_mat_to_pat,"/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.pat.fa.gz","/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.mat.fa.gz"
+```
+
+`input_mapping.csv`
+```
+input,type,value
+asm2asmAlignment.queryAssemblyFastaGz,scalar,$input.query_assembly_fasta_gz
+asm2asmAlignment.alignmentBam.threadCount,scalar,32
+asm2asmAlignment.refAssemblyFastaGz,scalar,$input.ref_assembly_fasta_gz
+asm2asmAlignment.alignmentBam.memSize,scalar,64
+asm2asmAlignment.alignmentBam.diskSize,scalar,64
+asm2asmAlignment.preset,scalar,"asm5"
+asm2asmAlignment.suffix,scalar,$input.sample_id
+asm2asmAlignment.alignmentBam.options,scalar,"--eqx --cs -L"
+asm2asmAlignment.aligner,scalar,"minimap2"
+```
+
+Make json files:
+```
+USER_NAME="masri"
+EMAIL="masri@ucsc.edu"
+
+WDL_PATH="/private/groups/patenlab/masri/apps/flagger/wdls/tasks/alignment/asm2asm_aligner.wdl"
+WDL_NAME=$(basename ${WDL_PATH%%.wdl})
+
+INPUT_MAPPING_CSV="/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/asm_alignment/input_mapping.csv"
+INPUT_DATA_TABLE_CSV="/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/asm_alignment/data_table.csv"
+
+WORKING_DIR="/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/asm_alignment"
+
+mkdir -p ${WORKING_DIR}
+cd ${WORKING_DIR}
+
+mkdir ${WDL_NAME}_output_jsons
+mkdir ${WDL_NAME}_input_jsons
+
+
+LAUNCH_FROM_TABLE_PY="/private/groups/patenlab/masri/apps/hprc_intermediate_assembly/hpc/launch_from_table.py"
+LAUNCH_WORKFLOW_JOB_ARRAY_BASH="/private/groups/patenlab/masri/apps/hprc_intermediate_assembly/hpc/launch_workflow_job_array_single_machine.sh"
+
+cd ${WORKING_DIR}/${WDL_NAME}_input_jsons
+python3  ${LAUNCH_FROM_TABLE_PY} \
+    --data_table ${INPUT_DATA_TABLE_CSV} \
+    --field_mapping ${INPUT_MAPPING_CSV} \
+    --workflow_name ${WDL_NAME}
+```
+
+Look at json files:
+```
+cat HG04115_mat_polished_to_raw_asm2asm_aligner.json
+{
+  "asm2asmAlignment.queryAssemblyFastaGz": "/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115_Hap2.polished.fa.gz",
+  "asm2asmAlignment.alignmentBam.threadCount": 32,
+  "asm2asmAlignment.refAssemblyFastaGz": "/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.mat.fa.gz",
+  "asm2asmAlignment.alignmentBam.memSize": 64,
+  "asm2asmAlignment.alignmentBam.diskSize": 64,
+  "asm2asmAlignment.preset": "asm5",
+  "asm2asmAlignment.suffix": "HG04115_mat_polished_to_raw",
+  "asm2asmAlignment.alignmentBam.options": "--eqx --cs -L",
+  "asm2asmAlignment.aligner": "minimap2"
+}
+
+
+cat HG04115_pat_polished_to_raw_asm2asm_aligner.json
+{
+  "asm2asmAlignment.queryAssemblyFastaGz": "/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115_Hap1.polished.fa.gz",
+  "asm2asmAlignment.alignmentBam.threadCount": 32,
+  "asm2asmAlignment.refAssemblyFastaGz": "/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.pat.fa.gz",
+  "asm2asmAlignment.alignmentBam.memSize": 64,
+  "asm2asmAlignment.alignmentBam.diskSize": 64,
+  "asm2asmAlignment.preset": "asm5",
+  "asm2asmAlignment.suffix": "HG04115_pat_polished_to_raw",
+  "asm2asmAlignment.alignmentBam.options": "--eqx --cs -L",
+  "asm2asmAlignment.aligner": "minimap2"
+}
+
+
+cat HG04115_polished_mat_to_pat_asm2asm_aligner.json
+{
+  "asm2asmAlignment.queryAssemblyFastaGz": "/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.mat.fa.gz",
+  "asm2asmAlignment.alignmentBam.threadCount": 32,
+  "asm2asmAlignment.refAssemblyFastaGz": "/private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/assemblies/HG04115.pat.fa.gz",
+  "asm2asmAlignment.alignmentBam.memSize": 64,
+  "asm2asmAlignment.alignmentBam.diskSize": 64,
+  "asm2asmAlignment.preset": "asm5",
+  "asm2asmAlignment.suffix": "HG04115_polished_mat_to_pat",
+  "asm2asmAlignment.alignmentBam.options": "--eqx --cs -L",
+  "asm2asmAlignment.aligner": "minimap2"
+}
+```
+
+Run the job
+```
+cd ${WORKING_DIR}
+cd ${WDL_NAME}_output_jsons
+INPUT_JSON_DIR=${WORKING_DIR}/${WDL_NAME}_input_jsons
+mkdir -p ${WDL_NAME}_logs
+
+sbatch      --job-name=${WDL_NAME}_${USERNAME} \
+            --cpus-per-task=32 \
+            --mem=64G \
+            --mail-user=${EMAIL} \
+            --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
+            --array=1-3%3  \
+            --partition=medium  \
+            --time=12:00:00 \
+            ${LAUNCH_WORKFLOW_JOB_ARRAY_BASH} \
+            --wdl ${WDL_PATH} \
+            --sample_csv  ${INPUT_DATA_TABLE_CSV} \
+            --input_json_dir ${INPUT_JSON_DIR}
+```
