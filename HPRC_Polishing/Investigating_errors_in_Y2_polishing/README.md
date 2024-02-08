@@ -285,3 +285,29 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --sample_csv  ${INPUT_DATA_TABLE_CSV} \
             --input_json_dir ${INPUT_JSON_DIR}
 ```
+
+
+### Comment 3 : 02/08/2024
+#### Convert BAM to PAF
+
+My projection script works with paf format so I have to convert all bam files to paf
+```
+# get some resources on pheonix
+salloc  -c 8 --mem 32G bash -c 'ssh -Y $(scontrol show hostnames | head -n 1)'
+
+# run the docker image with paftools
+docker run -u$(id -u):$(id -g) --rm -it -v/private/groups/patenlab/masri/:/private/groups/patenlab/masri/ mobinasri/long_read_aligner:v0.3.3
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/asm_alignment/asm2asm_aligner_output_jsons/
+
+## convert to paf
+
+# for polished to raw maternal
+k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_mat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap2.polished.HG04115_mat_polished_to_raw.sorted.bam) > HG04115_mat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap2.polished.HG04115_mat_polished_to_raw.sorted.pri.paf
+
+# for polished to raw paternal
+k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_pat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap1.polished.HG04115_pat_polished_to_raw.sorted.bam) > HG04115_pat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap1.polished.HG04115_pat_polished_to_raw.sorted.pri.paf
+
+# for maternal to paternal raw
+k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_polished_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_polished_mat_to_pat.sorted.bam) > HG04115_polished_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_polished_mat_to_pat.sorted.pri.paf
+```
