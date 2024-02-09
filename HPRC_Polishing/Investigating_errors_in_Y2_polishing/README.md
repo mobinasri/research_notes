@@ -341,4 +341,126 @@ cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG0411
 cat HG04115.polished.merqury.asm_only.bed | bedtools merge -o count -c 1 > ../HG04115.hap1.polished.fp_kmers.merged_count.bed
 cat HG04115.polished.merqury.altHap_only.bed | bedtools merge -o count -c 1 > ../HG04115.hap2.polished.fp_kmers.merged_count.bed
 
+
+# cat two haps in a single bed
+# for polished
+cat HG04115.hap1.polished.fp_kmers.merged_count.bed HG04115.hap2.polished.fp_kmers.merged_count.bed > HG04115.dip.polished.fp_kmers.merged_count.bed
+# for raw
+cat HG04115.hap1.raw.fp_kmers.merged_count.bed HG04115.hap2.raw.fp_kmers.merged_count.bed > HG04115.dip.raw.fp_kmers.merged_count.bed
+```
+
+Make a merged paf file for projecting from polished to raw assembly
+```
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/asm_alignment/asm2asm_aligner_output_jsons/HG04115_dip_polished_to_raw
+cat ../HG04115_mat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap2.polished.HG04115_mat_polished_to_raw.sorted.pri.paf ../HG04115_pat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap1.polished.HG04115_pat_polished_to_raw.sorted.pri.paf  > HG04115_dip.polished_to_raw.paf
+```
+
+#### Project FP kmers from polished assembly to raw
+
+```
+# run docker with the projection script
+docker run -u$(id -u):$(id -g) --rm -it -v/private/groups/patenlab/masri/:/private/groups/patenlab/masri/ mobinasri/flagger@sha256:5d738412b56bac5a64227569c1d6e57e7920e3d3e5724c17ab233f92279bcff6
+
+mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/projections
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/projections
+
+# run projection
+python3 /home/programs/src/project_blocks_multi_thread.py --mode asm2ref --paf ../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_dip_polished_to_raw/HG04115_dip.polished_to_raw.paf --blocks ../HG04115.dip.polished.fp_kmers.merged_count.bed --outputProjectable HG04115.dip.polished.fp_kmers.merged_count.projectable.bed --outputProjection HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.bed --threads 8
+```
+
+#### Look at some numbers
+
+```
+# Number of fp kmers in the polished assembly
+cat HG04115.dip.polished.fp_kmers.merged_count.bed | awk '{s+=$4}END{print s}'
+121376
+
+# Number of fp kmers in the raw assembly
+cat HG04115.dip.raw.fp_kmers.merged_count.bed | awk '{s+=$4}END{print s}'
+83423
+
+# Number of fp kmers only in the polished assembly with no overlap
+# with any contiguous FP block in the raw assembly by using parameter (-A)
+bedtools subtract -a projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed \
+    -b HG04115.dip.raw.fp_kmers.merged_count.bed -A | \
+    awk '{s+=$4}END{print s}'
+61148
+
+# Number of fp kmers only in the raw assembly with no overlap
+# with any contiguous FP block in the polished assembly by using parameter (-A)
+bedtools subtract -a HG04115.dip.raw.fp_kmers.merged_count.bed 
+-b projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed -A | \
+    awk '{s+=$4}END{print s}'
+22973
+
+# how many FP kmers are located in FP kmer block with more than 10 kmers
+bedtools subtract -a projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  \
+    -b HG04115.dip.raw.fp_kmers.merged_count.bed -A | \
+    awk '$4>10{s+=$4}END{print s}'
+31978
+
+```
+
+So we are fixing about 22k FP kmers and adding 61k FP kmers by polishing. Nearly half of the induced FP kmers are located in the FP kmer blocks with more than 10 kmers.
+
+### List of regions with induced FP kmers
+
+```
+# top 10 induced FP kmer blocks
+bedtools subtract -a projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  -b HG04115.dip.raw.fp_kmers.merged_count.bed -A | sort -k4,4 -nr | head
+
+h2tg000017l	44007725	44007744	75
+h2tg000017l	44007596	44007615	75
+h1tg000025l	11115931	11115967	46
+h2tg000004l	54543133	54543171	39
+h2tg000009l	13643	13676	33
+h1tg000010l	14340	14367	32
+h1tg000006l	103375874	103375936	32
+h1tg000021l	81115646	81115725	29
+h1tg000006l	128659088	128659124	29
+h1tg000005l	91526502	91526513	24
+
+# select 10 random FP kmer blocks with more than 10 FP kmers added after polishing
+bedtools subtract -a projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed     -b HG04115.dip.raw.fp_kmers.merged_count.bed -A | awk '$4>10' | shuf -n10
+
+h1tg000010l	39501395	39501429	15
+h1tg000023l	37458874	37458906	13
+h1tg000010l	58275971	58276003	13
+h1tg000007l	65505462	65505492	11
+h1tg000001l	58898253	58898283	11
+h2tg000004l	20621992	20622023	11
+h2tg000029l	8755529	8755560	12
+h1tg000013l	102495348	102495378	11
+h2tg000002l	83450466	83450497	12
+h1tg000012l	40544128	40544158	11
+```
+
+### List of regions with fixed FP kmers
+```
+# top 10 fixed FP kmer blocks
+bedtools subtract -b projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  -a HG04115.dip.raw.fp_kmers.merged_count.bed -A | sort -k4,4 -nr | head
+h2tg000029l	1322059	1322280	176
+h1tg000028l	593951	594085	86
+h1tg000005l	189129735	189129843	60
+h1tg000016l	67184872	67184959	59
+h1tg000010l	30912006	30912079	52
+h2tg000015l	130537683	130537764	51
+h1tg000001l	87103240	87103308	45
+h1tg000016l	67186145	67186217	42
+h2tg000015l	32495310	32495369	39
+h1tg000016l	67186020	67186087	39
+
+# select 10 random FP kmer blocks with more than 10 FP kmers removed after polishing
+bedtools subtract -b projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  -a HG04115.dip.raw.fp_kmers.merged_count.bed -A | awk '$4>10' | shuf -n10
+h1tg000006l	64301616	64301657	21
+h2tg000006l	25484793	25484830	17
+h2tg000001l	4485075	4485108	13
+h2tg000014l	152627	152666	19
+h2tg000015l	14798062	14798100	18
+h1tg000018l	163142884	163142924	20
+h1tg000007l	64781285	64781326	20
+h1tg000020l	17544148	17544187	19
+h1tg000037l	3132060	3132098	18
+h1tg000008l	30551358	30551398	20
+
 ```
