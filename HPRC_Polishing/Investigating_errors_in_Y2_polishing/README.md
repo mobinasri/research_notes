@@ -139,6 +139,7 @@ cat HG04115_pat_raw_bwa.json
 
 ```
 
+
 Run the job
 ```
 cd ${WORKING_DIR}
@@ -160,6 +161,26 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --input_json_dir ${INPUT_JSON_DIR}
 ```
 
+Get stats for the bam file
+```
+samtools flagstats HG04115_mat_raw_short_reads.sorted.bam
+726438176 + 0 in total (QC-passed reads + QC-failed reads)
+721374894 + 0 primary
+0 + 0 secondary
+5063282 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+724289710 + 0 mapped (99.70% : N/A)
+719226428 + 0 primary mapped (99.70% : N/A)
+2666994 + 0 paired in sequencing
+1333497 + 0 read1
+1333497 + 0 read2
+739770 + 0 properly paired (27.74% : N/A)
+1144398 + 0 with itself and mate mapped
+714647 + 0 singletons (26.80% : N/A)
+321688 + 0 with mate mapped to a different chr
+164568 + 0 with mate mapped to a different chr (mapQ>=5)
+```
 ### Comment 2 : 02/07/2024
 
 #### Make asm2asm alignments
