@@ -183,8 +183,8 @@ samtools flagstats HG04115_mat_raw_short_reads.sorted.bam
 ```
 
 #### Fix the issue with low percentage of properly paired reads
-This problem arised because of extracting reads from cram and saving them in fastq. I didn't sort the reads by name therefore the paired-end reads may not end up beside each other in the output fastq, which is neccessary for using `bwa mem` with `-p` parameter.
-I sorted reads by name in cram and them save them in fastq. It fixed the issue and now the percentage of the properly paired reads in much higher than before.
+This problem arised because of not sorting reads by name while extracting reads from cram and saving them in fastq. Becasuse of this the paired-end reads may not end up being beside each other in the output fastq, which is neccessary for using `bwa mem` with `-p` parameter.
+I sorted reads by name in cram and them save them in fastq. It fixed the issue and now the percentage of the properly paired reads is much higher than before.
 ```
 samtools flagstats HG04115_mat_raw_short_reads.sorted.bam
 726380027 + 0 in total (QC-passed reads + QC-failed reads)
