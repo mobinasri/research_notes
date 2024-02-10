@@ -508,7 +508,7 @@ h2tg000015l	130537683	130537764	51
 h2tg000029l	1322059	1322280	176
 ```
 
-### Project top 10 fixed FP kmer blocks
+#### Project top 10 fixed FP kmer blocks
 ```
 mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/top_10_fixed_FP_kmer_block/projections
 
@@ -642,4 +642,159 @@ cat random_10_fixed_FP_kmer_blocks.hap2.projection.bed
 h1tg000001l	92915720	92915769	19
 h1tg000007l	132161530	132161568	18
 h1tg000008l	4447992	4448025	13
+```
+
+#### Top 10 induced FP kmer blocks
+```
+mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/top_10_induced_FP_kmer_block
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/top_10_induced_FP_kmer_block
+
+cat top_10_induced_FP_kmer_blocks.hap1.bed
+h1tg000005l	91526502	91526513	24
+h1tg000006l	103375874	103375936	32
+h1tg000006l	128659088	128659124	29
+h1tg000010l	14340	14367	32
+h1tg000021l	81115646	81115725	29
+h1tg000025l	11115931	11115967	46
+
+cat top_10_induced_FP_kmer_blocks.hap2.bed
+h2tg000004l	54543133	54543171	39
+h2tg000009l	13643	13676	33
+h2tg000017l	44007596	44007615	75
+h2tg000017l	44007725	44007744	75
+```
+
+#### Project top 10 induced FP kmer blocks
+```
+mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/top_10_induced_FP_kmer_block/projections
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/top_10_induced_FP_kmer_block/projections
+
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode asm2ref \
+    --paf ../../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_pat.sorted.pri.paf \
+    --blocks ../top_10_induced_FP_kmer_blocks.hap2.bed \
+    --outputProjectable top_10_induced_FP_kmer_blocks.hap2.projectable.bed \
+    --outputProjection top_10_induced_FP_kmer_blocks.hap2.projection.bed \
+    --threads 8
+
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode ref2asm \
+    --paf ../../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_pat.sorted.pri.paf \
+    --blocks ../top_10_induced_FP_kmer_blocks.hap1.bed \
+    --outputProjectable top_10_induced_FP_kmer_blocks.hap1.projectable.bed \
+    --outputProjection top_10_induced_FP_kmer_blocks.hap1.projection.bed \
+    --threads 8
+
+```
+
+Take a look at projectables and projections:
+```
+# for hap1
+
+cat top_10_induced_FP_kmer_blocks.hap1.projectable.bed
+h1tg000005l	91526502	91526513	24
+h1tg000006l	103375874	103375936	32
+h1tg000006l	128659088	128659124	29
+h1tg000010l	14340	14367	32
+h1tg000021l	81115646	81115725	29
+h1tg000025l	11115931	11115967	46
+
+cat top_10_induced_FP_kmer_blocks.hap1.projection.bed
+h2tg000003l	90149103	90149114	24
+h2tg000007l	138488216	138488278	32
+h2tg000007l	113193927	113193981	29
+h2tg000025l	80009747	80009774	32
+h2tg000005l	80494787	80494876	29
+h2tg000022l	122731862	122731941	46
+
+# for hap2
+cat top_10_induced_FP_kmer_blocks.hap2.projectable.bed
+h2tg000017l	44007596	44007615	75
+h2tg000017l	44007725	44007744	75
+h2tg000009l	13643	13676	33
+
+cat top_10_induced_FP_kmer_blocks.hap2.projection.bed
+h1tg000004l	44101416	44101435	75
+h1tg000004l	44101545	44101564	75
+h1tg000028l	14193	14226	33
+```
+
+#### 10 random induced FP kmer blocks
+
+```
+mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/random_10_induced_FP_kmer_block
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/random_10_induced_FP_kmer_block
+
+cat random_10_induced_FP_kmer_blocks.hap1.bed
+h1tg000001l	58898253	58898283	11
+h1tg000007l	65505462	65505492	11
+h1tg000010l	39501395	39501429	15
+h1tg000010l	58275971	58276003	13
+h1tg000012l	40544128	40544158	11
+h1tg000013l	102495348	102495378	11
+h1tg000023l	37458874	37458906	13
+
+cat random_10_induced_FP_kmer_blocks.hap2.bed
+h2tg000002l	83450466	83450497	12
+h2tg000004l	20621992	20622023	11
+h2tg000029l	8755529	8755560	12
+```
+
+#### Project 10 random induced FP kmer blocks
+```
+mkdir -p /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/random_10_induced_FP_kmer_block/projections
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/analysis/random_10_induced_FP_kmer_block/projections
+
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode asm2ref \
+    --paf ../../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_pat.sorted.pri.paf \
+    --blocks ../random_10_induced_FP_kmer_blocks.hap2.bed \
+    --outputProjectable random_10_induced_FP_kmer_blocks.hap2.projectable.bed \
+    --outputProjection random_10_induced_FP_kmer_blocks.hap2.projection.bed \
+    --threads 8
+
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode ref2asm \
+    --paf ../../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_mat_to_pat/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_pat.sorted.pri.paf \
+    --blocks ../random_10_induced_FP_kmer_blocks.hap1.bed \
+    --outputProjectable random_10_induced_FP_kmer_blocks.hap1.projectable.bed \
+    --outputProjection random_10_induced_FP_kmer_blocks.hap1.projection.bed \
+    --threads 8
+```
+
+Take a look at projectables and projections:
+```
+# for hap1
+cat random_10_induced_FP_kmer_blocks.hap1.projectable.bed
+h1tg000001l	58898253	58898273	11
+h1tg000007l	65505462	65505492	11
+h1tg000010l	39501395	39501429	15
+h1tg000010l	58275971	58276003	13
+h1tg000012l	40544128	40544158	11
+h1tg000013l	102495348	102495378	11
+h1tg000023l	37458874	37458906	13
+
+cat random_10_induced_FP_kmer_blocks.hap1.projection.bed
+h2tg000024l	58859726	58859746	11
+h2tg000015l	81872185	81872217	11
+h2tg000025l	40636928	40636962	15
+h2tg000025l	21754013	21754057	13
+h2tg000016l	40541562	40541592	11
+h2tg000029l	34668000	34668036	11
+h2tg000020l	36393706	36393738	13
+
+# for hap2
+cat random_10_induced_FP_kmer_blocks.hap2.projectable.bed
+h2tg000004l	20621992	20622023	11
+h2tg000029l	8755529	8755560	12
+h2tg000002l	83450466	83450497	12
+
+cat random_10_induced_FP_kmer_blocks.hap2.projection.bed
+h1tg000002l	140513931	140513962	11
+h1tg000013l	128410074	128410105	12
+h1tg000017l	21162439	21162470	12
 ```
