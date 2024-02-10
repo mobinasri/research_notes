@@ -181,6 +181,30 @@ samtools flagstats HG04115_mat_raw_short_reads.sorted.bam
 321688 + 0 with mate mapped to a different chr
 164568 + 0 with mate mapped to a different chr (mapQ>=5)
 ```
+
+#### Fix the issue with low percentage of properly paired reads
+This problem arised because of extracting reads from cram and saving them in fastq. I didn't sort the reads by name therefore the paired-end reads may not end up beside each other in the output fastq, which is neccessary for using `bwa mem` with `-p` parameter.
+I sorted reads by name in cram and them save them in fastq. It fixed the issue and now the percentage of the properly paired reads in much higher than before.
+```
+samtools flagstats HG04115_mat_raw_short_reads.sorted.bam
+726380027 + 0 in total (QC-passed reads + QC-failed reads)
+721374894 + 0 primary
+0 + 0 secondary
+5005133 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+725024515 + 0 mapped (99.81% : N/A)
+720019382 + 0 primary mapped (99.81% : N/A)
+721374894 + 0 paired in sequencing
+360687447 + 0 read1
+360687447 + 0 read2
+709529170 + 0 properly paired (98.36% : N/A)
+719217508 + 0 with itself and mate mapped
+801874 + 0 singletons (0.11% : N/A)
+8399022 + 0 with mate mapped to a different chr
+4398355 + 0 with mate mapped to a different chr (mapQ>=5)
+```
+
 ### Comment 2 : 02/07/2024
 
 #### Make asm2asm alignments
