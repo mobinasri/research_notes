@@ -798,3 +798,111 @@ h1tg000002l	140513931	140513962	11
 h1tg000013l	128410074	128410105	12
 h1tg000017l	21162439	21162470	12
 ```
+
+Comment 4 : 02/09/2024
+
+#### Project FP kmer block to chm13v2.0 coordinates
+
+Make the paf files
+```
+# get the docker image with paftools
+docker run -u$(id -u):$(id -g) --rm -it -v/private/groups/patenlab/masri/:/private/groups/patenlab/masri/ mobinasri/long_read_aligner:v0.3.3
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/asm_alignment/asm2asm_aligner_output_jsons
+
+# convert bam to paf to maternal alignment
+k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_raw_mat_to_chm13v2/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_chm13v2.sorted.bam) > HG04115_raw_mat_to_chm13v2/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_chm13v2.sorted.pri.paf
+
+# convert bam to paf to paternal alignment
+k8 /home/apps/minimap2-2.26/misc/paftools.js sam2paf -p <(samtools view -h HG04115_raw_pat_to_chm13v2/asm2asm_aligner_outputs/HG04115.pat.HG04115_raw_pat_to_chm13v2.sorted.bam) > HG04115_raw_pat_to_chm13v2/asm2asm_aligner_outputs/HG04115.pat.HG04115_raw_pat_to_chm13v2.sorted.pri.paf
+```
+
+Make bed files with all induced and fixed FP kmer blocks in the coordinates of the raw assembly
+```
+# get the docker image with projection script
+docker run -u$(id -u):$(id -g) --rm -it -v/private/groups/patenlab/masri/:/private/groups/patenlab/masri/ mobinasri/flagger@sha256:5d738412b56bac5a64227569c1d6e57e7920e3d3e5724c17ab233f92279bcff6
+
+cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG04115/fp_kmers/analysis
+
+# induced FP kmer block for hap1
+bedtools subtract -a ../projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  -b ../HG04115.dip.raw.fp_kmers.merged_count.bed -A | grep "h1tg" | bedtools sort -i - > induced_fp_kmer_blocks.hap1.bed
+
+# induced FP kmer block for hap2
+bedtools subtract -a ../projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  -b ../HG04115.dip.raw.fp_kmers.merged_count.bed -A | grep "h2tg" | bedtools sort -i - > induced_fp_kmer_blocks.hap2.bed
+
+# fixed FP kmer block for hap1
+bedtools subtract -b ../projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  -a ../HG04115.dip.raw.fp_kmers.merged_count.bed -A | grep "h1tg" | bedtools sort -i - > fixed_fp_kmer_blocks.hap1.bed
+
+# fixed FP kmer block for hap2
+bedtools subtract -b ../projections/HG04115.dip.polished.fp_kmers.merged_count.projection_to_raw.sorted.bed  -a ../HG04115.dip.raw.fp_kmers.merged_count.bed -A | grep "h2tg" | bedtools sort -i - > fixed_fp_kmer_blocks.hap2.bed
+```
+
+Project BED files to chm13 coordinates
+```
+
+# fixed hap1
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode asm2ref \
+    --blocks fixed_fp_kmer_blocks.hap1.bed \
+    --paf ../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_pat_to_chm13v2/asm2asm_aligner_outputs/HG04115.pat.HG04115_raw_pat_to_chm13v2.sorted.pri.paf \
+    --outputProjectable fixed_fp_kmer_blocks.hap1.to_chm13v2.projectable.bed \
+    --outputProjection fixed_fp_kmer_blocks.hap1.to_chm13v2.projection.bed \
+    --threads 8
+
+bedtools sort -i fixed_fp_kmer_blocks.hap1.to_chm13v2.projection.bed > fixed_fp_kmer_blocks.hap1.to_chm13v2.projection.sorted.bed
+
+
+# fixed hap2
+
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode asm2ref \
+    --blocks fixed_fp_kmer_blocks.hap2.bed \
+    --paf ../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_mat_to_chm13v2/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_chm13v2.sorted.pri.paf \
+    --outputProjectable fixed_fp_kmer_blocks.hap2.to_chm13v2.projectable.bed \
+    --outputProjection fixed_fp_kmer_blocks.hap2.to_chm13v2.projection.bed \
+    --threads 8
+
+bedtools sort -i fixed_fp_kmer_blocks.hap2.to_chm13v2.projection.bed > fixed_fp_kmer_blocks.hap2.to_chm13v2.projection.sorted.bed
+
+
+# induced hap1
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode asm2ref \
+    --blocks induced_fp_kmer_blocks.hap1.bed \
+    --paf ../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_pat_to_chm13v2/asm2asm_aligner_outputs/HG04115.pat.HG04115_raw_pat_to_chm13v2.sorted.pri.paf \
+    --outputProjectable induced_fp_kmer_blocks.hap1.to_chm13v2.projectable.bed \
+    --outputProjection induced_fp_kmer_blocks.hap1.to_chm13v2.projection.bed \
+    --threads 8
+
+bedtools sort -i induced_fp_kmer_blocks.hap1.to_chm13v2.projection.bed > induced_fp_kmer_blocks.hap1.to_chm13v2.projection.sorted.bed
+
+# induced hap2
+python3 /home/programs/src/project_blocks_multi_thread.py \
+    --mode asm2ref \
+    --blocks induced_fp_kmer_blocks.hap2.bed \
+    --paf ../../asm_alignment/asm2asm_aligner_output_jsons/HG04115_raw_mat_to_chm13v2/asm2asm_aligner_outputs/HG04115.mat.HG04115_raw_mat_to_chm13v2.sorted.pri.paf \
+    --outputProjectable induced_fp_kmer_blocks.hap2.to_chm13v2.projectable.bed \
+    --outputProjection induced_fp_kmer_blocks.hap2.to_chm13v2.projection.bed \
+    --threads 8
+
+bedtools sort -i induced_fp_kmer_blocks.hap2.to_chm13v2.projection.bed > induced_fp_kmer_blocks.hap2.to_chm13v2.projection.sorted.bed
+
+```
+
+Make cov files for each projection bed file:
+```
+TYPE="fixed"
+HAP="hap1"
+
+bedtools subtract -a chm13v2.0.bed -b ../${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.bed | awk '{print $1"\t"$2"\t"$3"\t"0}' > ${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.only_zero.bed
+
+# make a bed file covering the whole genome
+cat ../${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.bed ${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.only_zero.bed | bedtools sort -i - > ${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.complete.bed
+
+# make a cov file
+awk 'BEGIN{ctg=""}FNR==NR{ctg_len[$1]=$2;next} FNR!=NR{if(ctg != $1){ctg=$1; print ">"ctg" "ctg_len[ctg]}; print $2+1"\t"$3"\t"$4}' chm13v2.0.fa.fai ${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.complete.bed > ${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.complete.cov
+
+# convert cov to wig
+cov2wig -i ${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.complete.cov -f chm13v2.0.fa.fai -s 100 -o ${TYPE}_fp_kmer_blocks.${HAP}.to_chm13v2.projection.sorted.complete.wig -n ${TYPE}_${HAP}
+
+```
