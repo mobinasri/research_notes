@@ -400,6 +400,17 @@ cd /private/groups/patenlab/masri/hprc/polishing/investigating_Y2_results/HG0411
 cat ../HG04115_mat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap2.polished.HG04115_mat_polished_to_raw.sorted.pri.paf ../HG04115_pat_polished_to_raw/asm2asm_aligner_outputs/HG04115_Hap1.polished.HG04115_pat_polished_to_raw.sorted.pri.paf  > HG04115_dip.polished_to_raw.paf
 ```
 
+Count total number of FP kmers before and after polishing
+```
+# after polishing
+cat HG04115.dip.polished.fp_kmers.merged_count.bed | awk '{s+=$4}END{print s}'
+121376
+
+# before polishing
+cat HG04115.dip.raw.fp_kmers.merged_count.bed | awk '{s+=$4}END{print s}'
+83423
+```
+
 #### Project FP kmers from polished assembly to raw
 
 ```
