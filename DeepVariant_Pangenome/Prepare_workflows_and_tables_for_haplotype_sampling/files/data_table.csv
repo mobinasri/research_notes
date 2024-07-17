@@ -1,2 +1,8 @@
 sample_id,read_files
-HG003_HPRC_v1.1.hap_sampled,"['gs://pepper-deepvariant/seeskand/dv_training/HG003_35x_merged.positionsorted.bam']"
+HG001_HPRC_v1.1.hap_sampled,"['/private/groups/patenlab/masri/haplotype_sampling/HG003/short_reads/HG001_merged.positionsorted.bam']"
+HG002_HPRC_v1.1.hap_sampled,"['/private/groups/patenlab/masri/haplotype_sampling/HG003/short_reads/HG002_merged.positionsorted.bam']"
+HG003_HPRC_v1.1.hap_sampled,"['/private/groups/patenlab/masri/haplotype_sampling/HG003/short_reads/HG003_35x_merged.positionsorted.bam']"
+HG004_HPRC_v1.1.hap_sampled,"['/private/groups/patenlab/masri/haplotype_sampling/HG003/short_reads/HG004_merged.positionsorted.bam']"
+HG005_HPRC_v1.1.hap_sampled,"['/private/groups/patenlab/masri/haplotype_sampling/HG003/short_reads/HG005_merged.positionsorted.bam']"
+HG006_HPRC_v1.1.hap_sampled,"['/private/groups/patenlab/masri/haplotype_sampling/HG003/short_reads/HG006_merged.positionsorted.bam']"
+HG007_HPRC_v1.1.hap_sampled,"['/private/groups/patenlab/masri/haplotype_sampling/HG003/short_reads/HG007_merged.positionsorted.bam']"
