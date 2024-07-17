@@ -79,3 +79,118 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --sample_csv  ${INPUT_DATA_TABLE_CSV} \
             --input_json_dir ${INPUT_JSON_DIR}
 ```
+
+
+### Comment 2 : 07/16/2024
+
+I updated the csv file to contain all 7 GIAB samples. [data_table.csv](https://github.com/mobinasri/research_notes/blob/main/DeepVariant_Pangenome/Prepare_workflows_and_tables_for_haplotype_sampling/files/data_table.csv)
+
+Then I ran the commands below to submit jobs for haplotype sampling using the workflow https://github.com/mobinasri/vg_wdl/blob/master/workflows/haplotype_sampling_customized.wdl
+
+Note that in these commands newer versions of the scripts launch_from_table.py and launch_workflow_job_array_single_machine.sh are used.
+
+#### Commands to generate input json files:
+
+```
+cd /private/groups/patenlab/masri/haplotype_sampling/HG003
+WORKING_DIR=${PWD}
+
+## Make sure you are in the working directory. Check step 1 for setting ${WORKING_DIR} if it's not set already
+cd ${WORKING_DIR}
+
+## Get the script for creating input json files.
+wget https://raw.githubusercontent.com/human-pangenomics/hprc_intermediate_assembly/1f61ff0043442d8350a282ef3533def588bee8dc/hpc/launch_from_table.py
+
+WDL_PATH=/private/groups/patenlab/masri/apps/vg_wdl/workflows/haplotype_sampling_customized.wdl
+WDL_FILENAME=$(basename ${WDL_PATH})
+WDL_NAME=${WDL_FILENAME%%.wdl}
+
+## Make a directory for saving input json files
+mkdir -p ${WDL_NAME}_input_jsons
+cd ${WDL_NAME}_input_jsons
+
+## Make input json files
+## One json will be created per row
+python3  ${WORKING_DIR}/launch_from_table.py \
+            --data_table ${WORKING_DIR}/data_table.csv \
+            --field_mapping ${WORKING_DIR}/input_mapping.csv \
+            --workflow_name ${WDL_NAME}
+
+
+```
+
+#### Commands to submit slurm jobs:
+
+```
+## Make sure you are in the working directory. Check step 1 for setting ${WORKING_DIR} if it's not set already
+cd ${WORKING_DIR}
+
+## Get the bash script for running WDLs on Slurm using Toil
+wget https://raw.githubusercontent.com/human-pangenomics/hprc_intermediate_assembly/b81bbb9540eaf5632a53faba43be71a0974f14f6/hpc/toil_sbatch_single_machine.sh
+
+## Set environment variables for sbatch
+USERNAME="masri"
+EMAIL="masri@ucsc.edu"
+TIME_LIMIT="70:00:00"
+
+## Partition should be modifed based on the available partitions on the server
+PARTITION="long"
+
+## Go to the execution directory
+mkdir -p ${WDL_NAME}_logs
+
+## Run jobs arrays
+## --array=1-7%7 will make 7 jobs; one per input json file (numbered by row indices in csv file)
+sbatch      --job-name=${WDL_NAME}_${USERNAME} \
+            --cpus-per-task=64 \
+            --mem=256G \
+            --mail-user=${EMAIL} \
+            --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
+            --array=1-7%7  \
+            --time=${TIME_LIMIT} \
+            --partition=${PARTITION} \
+            ${WORKING_DIR}/toil_sbatch_single_machine.sh \
+            --wdl ${WDL_PATH} \
+            --sample_csv  ${WORKING_DIR}/data_table.csv \
+            --input_json_path ${WORKING_DIR}/${WDL_NAME}_input_jsons/\${SAMPLE_ID}_${WDL_NAME}.json
+
+```
+
+
+The gbz files generated are listed here:
+```
+cd /private/groups/patenlab/masri/haplotype_sampling/HG003
+find . | grep "\.gbz" | grep analysis
+./HG002_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG002_HPRC_v1.1.hap_sampled.hap_num_4.gbz
+./HG002_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG002_HPRC_v1.1.hap_sampled.hap_num_16.gbz
+./HG002_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG002_HPRC_v1.1.hap_sampled.hap_num_2.gbz
+./HG002_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG002_HPRC_v1.1.hap_sampled.hap_num_8.gbz
+./HG006_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG006_HPRC_v1.1.hap_sampled.hap_num_4.gbz
+./HG006_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG006_HPRC_v1.1.hap_sampled.hap_num_8.gbz
+./HG006_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG006_HPRC_v1.1.hap_sampled.hap_num_2.gbz
+./HG006_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG006_HPRC_v1.1.hap_sampled.hap_num_16.gbz
+./HG003_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG003_HPRC_v1.1.hap_sampled.hap_num_16.gbz
+./HG003_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG003_HPRC_v1.1.hap_sampled.hap_num_4.gbz
+./HG003_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG003_HPRC_v1.1.hap_sampled.hap_num_8.gbz
+./HG003_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG003_HPRC_v1.1.hap_sampled.hap_num_2.gbz
+./HG001_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG001_HPRC_v1.1.hap_sampled.hap_num_8.gbz
+./HG001_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG001_HPRC_v1.1.hap_sampled.hap_num_4.gbz
+./HG001_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG001_HPRC_v1.1.hap_sampled.hap_num_16.gbz
+./HG001_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG001_HPRC_v1.1.hap_sampled.hap_num_2.gbz
+./HG007_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG007_HPRC_v1.1.hap_sampled.hap_num_4.gbz
+./HG007_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG007_HPRC_v1.1.hap_sampled.hap_num_2.gbz
+./HG007_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG007_HPRC_v1.1.hap_sampled.hap_num_8.gbz
+./HG007_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG007_HPRC_v1.1.hap_sampled.hap_num_16.gbz
+./HG005_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG005_HPRC_v1.1.hap_sampled.hap_num_8.gbz
+./HG005_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG005_HPRC_v1.1.hap_sampled.hap_num_16.gbz
+./HG005_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG005_HPRC_v1.1.hap_sampled.hap_num_4.gbz
+./HG005_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG005_HPRC_v1.1.hap_sampled.hap_num_2.gbz
+./HG004_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG004_HPRC_v1.1.hap_sampled.hap_num_8.gbz
+./HG004_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG004_HPRC_v1.1.hap_sampled.hap_num_16.gbz
+./HG004_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG004_HPRC_v1.1.hap_sampled.hap_num_2.gbz
+./HG004_HPRC_v1.1.hap_sampled/analysis/haplotype_sampling_customized_outputs/HG004_HPRC_v1.1.hap_sampled.hap_num_4.gbz
+```
+
+There are 4 gbz files per sample (28 in total). 
+
+These gbz files are uploaded to `gs://pepper-deepvariant/mobinasri/haplotype_sampling/giab_samples`
