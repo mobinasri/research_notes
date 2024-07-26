@@ -194,3 +194,9 @@ find . | grep "\.gbz" | grep analysis
 There are 4 gbz files per sample (28 in total). 
 
 These gbz files are uploaded to `gs://pepper-deepvariant/mobinasri/haplotype_sampling/giab_samples`
+
+
+### Comment 3 : 07/26/2024
+In all my previous jobs diploid sampling was turned on and I didn't know that with this option we can only get two haplotypes in the final gbz file and the number of haplotypes passed as an input parameter is only for specifying the number of the candidate haplotypes which are selected initially.To have more haplotypes I ran the same workflow using the same csv files however this time with diploid sampling turned off (the related line in data_table.csv is modified). The reason is that with diploid sampling turned we can only get two haplotypes in the final gbz file but for DeepVariant we like to train and test pangenome-aware models with varying number of haplotypes. 
+
+The jobs are finished and the final gbz files (28 files) are uploaded to the same bucket but in a new subdirectory: `gs://pepper-deepvariant/mobinasri/haplotype_sampling/giab_samples/non_diploid_sampling`
