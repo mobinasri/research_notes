@@ -52,7 +52,7 @@ cat paired-fastq-to-unmapped-bam.inputs.json
 
 ```
 
-## Run with Toil
+### Run Fastq to uBAM with Toil
 ```
 cd /private/groups/patenlab/masri/internship/external_callers/data/uBAM
 
@@ -78,7 +78,15 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --input_json ${INPUT_JSON_PATH}
 ```
 
-## Get and prepare WDL
+### Output uBAM
+```
+ls -lh /private/groups/patenlab/masri/internship/external_callers/data/uBAM/HG003/analysis/paired-fastq-to-unmapped-bam_outputs/HG003_Seq.unmapped.bam
+-rwxr--r-- 1 masri patenlab 59G Sep 12 00:31 /private/groups/patenlab/masri/internship/external_callers/data/uBAM/HG003/analysis/paired-fastq-to-unmapped-bam_outputs/HG003_Seq.unmapped.bam
+```
+
+## Run GTAK variant caller in 3 modes
+
+### Get and prepare WDL
 
 ```
 mkdir -p /private/groups/patenlab/masri/internship/external_callers/apps
@@ -98,7 +106,7 @@ for wdl_file in $(find ./tasks/broad/ | grep ".wdl$");do sed -i 's|mv|ln \-s|g' 
 for wdl_file in $(find ./pipelines/broad/ | grep ".wdl$");do sed -i 's|mv|ln \-s|g' ${wdl_file};done
 ```
 
-## Make 3 input json files for 3 modes
+### Make 3 input json files for 3 modes
 
 ```
 cp /private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/test_inputs/Plumbing/dragen_mode_functional_equivalence.json .
@@ -109,5 +117,83 @@ I removed these two lines since they are specific for sample NA12878
   "WholeGenomeGermlineSingleSample.fingerprint_genotypes_file": "gs://broad-gotc-test-storage/single_sample/plumbing/bams/G96830.NA12878/G96830.NA12878.hg38.reference.fingerprint.vcf.gz",
   "WholeGenomeGermlineSingleSample.fingerprint_genotypes_index": "gs://broad-gotc-test-storage/single_sample/plumbing/bams/G96830.NA12878/G96830.NA12878.hg38.reference.fingerprint.vcf.gz.tbi",
 ```
-Then added links to the i
+The final jsons are uploaded here:
 
+### run GATK in regular mode (no DRAGEN)
+
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular
+
+WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
+INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular/gatk_regular.json"
+SAMPLE_NAME="HG003_GATK_v4.6_regular_mode"
+WDL_NAME=$(basename ${WDL_PATH%%.wdl})
+mkdir -p ${WDL_NAME}_logs
+EMAIL="masri@ucsc.edu"
+USERNAME="masri"
+RUN_WDL_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_wdl_single_json.sh"
+
+sbatch      --job-name=${WDL_NAME}_${USERNAME} \
+            --cpus-per-task=64 \
+            --mem=256G \
+            --mail-user=${EMAIL} \
+            --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
+            --partition=long  \
+            --time=72:00:00 \
+            ${RUN_WDL_BASH} \
+            --wdl ${WDL_PATH} \
+            --sample_name ${SAMPLE_NAME} \
+            --input_json ${INPUT_JSON_PATH}
+```
+
+### run GATK in `dragen_functional_equivalence` mode
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence
+
+WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
+INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence/dragen_mode_functional_equivalence.json"
+SAMPLE_NAME="HG003_GATK_v4.6_dragen_functional_equivalence"
+WDL_NAME=$(basename ${WDL_PATH%%.wdl})
+mkdir -p ${WDL_NAME}_logs
+EMAIL="masri@ucsc.edu"
+USERNAME="masri"
+RUN_WDL_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_wdl_single_json.sh"
+
+sbatch      --job-name=${WDL_NAME}_${USERNAME} \
+            --cpus-per-task=64 \
+            --mem=256G \
+            --mail-user=${EMAIL} \
+            --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
+            --partition=long  \
+            --time=72:00:00 \
+            ${RUN_WDL_BASH} \
+            --wdl ${WDL_PATH} \
+            --sample_name ${SAMPLE_NAME} \
+            --input_json ${INPUT_JSON_PATH}
+```
+
+### run GATK in `dragen_maximum_quality` mode
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality
+
+WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
+INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality/dragen_mode_maximum_quality.json"
+SAMPLE_NAME="HG003_GATK_v4.6_dragen_maximum_quality"
+WDL_NAME=$(basename ${WDL_PATH%%.wdl})
+mkdir -p ${WDL_NAME}_logs
+EMAIL="masri@ucsc.edu"
+USERNAME="masri"
+RUN_WDL_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_wdl_single_json.sh"
+
+sbatch      --job-name=${WDL_NAME}_${USERNAME} \
+            --cpus-per-task=64 \
+            --mem=256G \
+            --mail-user=${EMAIL} \
+            --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
+            --partition=long  \
+            --time=72:00:00 \
+            ${RUN_WDL_BASH} \
+            --wdl ${WDL_PATH} \
+            --sample_name ${SAMPLE_NAME} \
+            --input_json ${INPUT_JSON_PATH}
+```
