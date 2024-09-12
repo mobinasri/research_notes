@@ -111,7 +111,7 @@ for wdl_file in $(find ./pipelines/broad/ | grep ".wdl$");do sed -i 's|mv|ln \-s
 cd /private/groups/patenlab/masri/internship/external_callers/apps/warp
 
 for wdl_file in $(find ./tasks/broad/ | grep ".wdl$");do sed -i '/cpu:/s/\"//g' ${wdl_file} ;done
-for wdl_file in $(find ./piplines/broad/ | grep ".wdl$");do sed -i '/cpu:/s/\"//g' ${wdl_file};done
+for wdl_file in $(find ./pipelines/broad/ | grep ".wdl$");do sed -i '/cpu:/s/\"//g' ${wdl_file};done
 ```
 
 ### Make 3 input json files for 3 modes
