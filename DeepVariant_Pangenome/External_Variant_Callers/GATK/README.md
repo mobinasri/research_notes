@@ -135,7 +135,7 @@ do
   }
   {
       print;                       # Print all lines (modified or not)
-  }' wdl_file
+  }' ${wdl_file}
 done
 
 for wdl_file in $(find ./pipelines/broad/ | grep ".wdl$");
@@ -157,7 +157,7 @@ do
   }
   {
       print;                       # Print all lines (modified or not)
-  }' wdl_file
+  }' ${wdl_file}
 done
 
 ```
