@@ -114,6 +114,54 @@ for wdl_file in $(find ./tasks/broad/ | grep ".wdl$");do sed -i '/cpu:/s/\"//g' 
 for wdl_file in $(find ./pipelines/broad/ | grep ".wdl$");do sed -i '/cpu:/s/\"//g' ${wdl_file};done
 ```
 
+### Fix indentation for the python codes written between `python3 <<CODE` and `CODE`
+```
+for wdl_file in $(find ./tasks/broad/ | grep ".wdl$");
+do
+  awk '
+  /<<CODE/ {
+      match($0, /^ */);            # Count leading spaces on the python line
+      spaces = RLENGTH;            # Store the number of leading spaces
+      in_block = 1;                # Set flag to indicate we are in the block between XXX-Y and ZZZ-Y
+  }
+  in_block && / CODE/ {
+      sub("^ {" spaces "}", "");   # Remove the leading spaces from the CODE line
+      print;                       # Print the CODE line
+      in_block = 0;                # Reset the flag as we are out of the block
+      next;
+  }
+  in_block {
+      sub("^ {" spaces "}", "");   # Remove the leading spaces from lines within the block
+  }
+  {
+      print;                       # Print all lines (modified or not)
+  }' wdl_file
+done
+
+for wdl_file in $(find ./pipelines/broad/ | grep ".wdl$");
+do
+  awk '
+  /<<CODE/ {
+      match($0, /^ */);            # Count leading spaces on the python line
+      spaces = RLENGTH;            # Store the number of leading spaces
+      in_block = 1;                # Set flag to indicate we are in the block between XXX-Y and ZZZ-Y
+  }
+  in_block && / CODE/ {
+      sub("^ {" spaces "}", "");   # Remove the leading spaces from the CODE line
+      print;                       # Print the CODE line
+      in_block = 0;                # Reset the flag as we are out of the block
+      next;
+  }
+  in_block {
+      sub("^ {" spaces "}", "");   # Remove the leading spaces from lines within the block
+  }
+  {
+      print;                       # Print all lines (modified or not)
+  }' wdl_file
+done
+
+```
+
 ### Make 3 input json files for 3 modes
 
 ```
