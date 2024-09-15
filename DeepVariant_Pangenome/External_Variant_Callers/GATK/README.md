@@ -193,8 +193,8 @@ USERNAME="masri"
 RUN_WDL_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_wdl_single_json.sh"
 
 sbatch      --job-name=${WDL_NAME}_${USERNAME} \
-            --cpus-per-task=64 \
-            --mem=256G \
+            --cpus-per-task=48 \
+            --mem=500G \
             --mail-user=${EMAIL} \
             --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
             --partition=long  \
@@ -219,8 +219,8 @@ USERNAME="masri"
 RUN_WDL_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_wdl_single_json.sh"
 
 sbatch      --job-name=${WDL_NAME}_${USERNAME} \
-            --cpus-per-task=64 \
-            --mem=256G \
+            --cpus-per-task=48 \
+            --mem=500G \
             --mail-user=${EMAIL} \
             --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
             --partition=long  \
