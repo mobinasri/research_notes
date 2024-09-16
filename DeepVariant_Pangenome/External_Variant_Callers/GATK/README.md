@@ -141,10 +141,48 @@ done
 
 ### Increased `memory_multiplier` for HaplotypeCaller_GATK4_VCF
 ```
-
 task HaplotypeCaller_GATK4_VCF {
   input {
     Int memory_multiplier = 2
+  }
+```
+
+### It seems like Toil does not evaluate the outputs of a task sequentially (?)
+
+I got this bug in the output log of Toil while running GATK in the regular mode.
+```
+	[2024-09-16T04:03:08-0700] [MainThread] [E] [toil.wdl.wdltoil] Expression evaluation failed for is_outlier_data: duplication_rate > max_duplication_in_reasonable_sample || chimerism_rate > max_chimerism_in_reasonable_sample
+	Traceback (most recent call last):
+	  File "/private/home/masri/.local/lib/python3.10/site-packages/WDL/Expr.py", line 123, in eval
+	    ans = self._eval(env, stdlib)
+	  File "/private/home/masri/.local/lib/python3.10/site-packages/WDL/Expr.py", line 863, in _eval
+	    return env[self.name]
+	  File "/private/home/masri/.local/lib/python3.10/site-packages/WDL/Env.py", line 127, in __getitem__
+	    return self.resolve(name)
+	  File "/private/home/masri/.local/lib/python3.10/site-packages/WDL/Env.py", line 114, in resolve
+	    return self.resolve_binding(name).value
+	  File "/private/home/masri/.local/lib/python3.10/site-packages/WDL/Env.py", line 106, in resolve_binding
+	    raise KeyError()
+	KeyError
+	
+	The above exception was the direct cause of the following exception:
+```
+
+#### I changed this code in `tasks/broad/Qc.wdl`
+```
+  output {
+    Float duplication_rate = read_float("duplication_value.txt")
+    Float chimerism_rate = read_float("chimerism_value.txt")
+    Boolean is_outlier_data = duplication_rate > max_duplication_in_reasonable_sample || chimerism_rate > max_chimerism_in_reasonable_sample
+  }
+}
+```
+#### To
+```
+  output {
+    Float duplication_rate = read_float("duplication_value.txt")
+    Float chimerism_rate = read_float("chimerism_value.txt")
+    Boolean is_outlier_data = (read_float("duplication_value.txt") > max_duplication_in_reasonable_sample) || (read_float("chimerism_value.txt") > max_chimerism_in_reasonable_sample)
   }
 ```
 
