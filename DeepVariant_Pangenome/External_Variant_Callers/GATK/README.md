@@ -139,7 +139,7 @@ do
 done
 ```
 
-### Increased `memory_multiplier` for HaplotypeCaller_GATK4_VCF
+### Increase `memory_multiplier` for HaplotypeCaller_GATK4_VCF
 ```
 task HaplotypeCaller_GATK4_VCF {
   input {
@@ -185,6 +185,33 @@ I got this bug in the output log of Toil while running GATK in the regular mode.
     Boolean is_outlier_data = (read_float("duplication_value.txt") > max_duplication_in_reasonable_sample) || (read_float("chimerism_value.txt") > max_chimerism_in_reasonable_sample)
   }
 ```
+
+### Fix allocating high memory to Java. (Thanks to Adam for catching this)
+
+I tried to run the workflows multiple times and they keep failing because of running out of memory even after increasing `memory_multiplier`. The output of `toil stats` was not reporting a significant amount of memory usage for any task (espeically for `HaplotypeCallerGATK4`). For example here it reports a total memory of only 1.5GB. 
+```
+ WholeGenomeGermlineSingleSample.BamToGvcf.HaplotypeCallerGATK4
+    Total Cores: 6.0
+    Count |                                        Time* |                                             Clock |                                               Wait |                                   Memory 
+        n |      min     med*     ave      max     total |      min       med       ave       max      total |         min     med        ave     max       total |      min     med     ave     max   total 
+        6 |     0.06     0.07    0.07     0.07      0.39 |     0.06      0.07      0.07      0.07       0.39 |       -0.00    0.00       0.00    0.00        0.00 |  241336K 241616K 241693K 242024K1450160K
+```
+
+I asked Adam about it and he pointed me to this line:
+https://github.com/broadinstitute/warp/blob/fe21c077ffc9c48ae7368e44bb7f6e88ce303b24/tasks/broad/GermlineVariantDiscovery.wdl#L124
+
+It seems like that this task is using `free` to get the total available memory but `free` does not consider the memory limitation enforced by Toil. Using `free` on a Pheonix node took the full 2TB of available memory. I will use `memory_size_mb` instead of `free` so that hopefully that out-of-memory issue is fixed.
+
+#### I replaced this line
+```
+    available_memory_mb=$(free -m | awk '/^Mem/ {print $2}')
+```
+#### with this
+```
+    #$(free -m | awk '/^Mem/ {print $2}')
+    available_memory_mb=memory_size_mb 
+```
+
 
 ### Make 3 input json files for 3 modes
 
