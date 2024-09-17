@@ -226,13 +226,40 @@ I removed these two lines since they are specific for sample NA12878
 ```
 The final jsons are uploaded here:
 
-### run GATK in regular mode (no DRAGEN)
+### run GATK in regular mode (no DRAGEN and `use_gatk3_haplotype_caller = true`)
 
 ```
 cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular
 
 WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
-INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular/gatk_regular.json"
+INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v3/gatk_v3_regular.json"
+SAMPLE_NAME="HG003_GATK_v3_regular_mode"
+WDL_NAME=$(basename ${WDL_PATH%%.wdl})
+mkdir -p ${WDL_NAME}_logs
+EMAIL="masri@ucsc.edu"
+USERNAME="masri"
+RUN_WDL_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_wdl_single_json.sh"
+
+sbatch      --job-name=${WDL_NAME}_${USERNAME} \
+            --cpus-per-task=64 \
+            --mem=250G \
+            --mail-user=${EMAIL} \
+            --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
+            --partition=long  \
+            --time=72:00:00 \
+            ${RUN_WDL_BASH} \
+            --wdl ${WDL_PATH} \
+            --sample_name ${SAMPLE_NAME} \
+            --input_json ${INPUT_JSON_PATH}
+```
+
+### run GATK in regular mode (no DRAGEN and `use_gatk3_haplotype_caller = false`)
+
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular
+
+WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
+INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v4.6/gatk_v4.6_regular.json"
 SAMPLE_NAME="HG003_GATK_v4.6_regular_mode"
 WDL_NAME=$(basename ${WDL_PATH%%.wdl})
 mkdir -p ${WDL_NAME}_logs
