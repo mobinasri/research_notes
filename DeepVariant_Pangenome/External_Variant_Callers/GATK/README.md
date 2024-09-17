@@ -229,7 +229,7 @@ The final jsons are uploaded here:
 ### run GATK in regular mode (no DRAGEN and `use_gatk3_haplotype_caller = true`)
 
 ```
-cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v3
 
 WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
 INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v3/gatk_v3_regular.json"
@@ -256,7 +256,7 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
 ### run GATK in regular mode (no DRAGEN and `use_gatk3_haplotype_caller = false`)
 
 ```
-cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v4.6
 
 WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
 INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v4.6/gatk_v4.6_regular.json"
