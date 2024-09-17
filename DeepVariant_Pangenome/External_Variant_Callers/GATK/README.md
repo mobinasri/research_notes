@@ -209,7 +209,7 @@ It seems like that this task is using `free` to get the total available memory b
 #### with this
 ```
     #$(free -m | awk '/^Mem/ {print $2}')
-    available_memory_mb=memory_size_mb 
+    available_memory_mb=~{memory_size_mb} 
 ```
 
 
