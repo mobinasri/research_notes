@@ -331,3 +331,62 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --sample_name ${SAMPLE_NAME} \
             --input_json ${INPUT_JSON_PATH}
 ```
+
+## Results
+
+### Results for `dragen_functional_equivalence` mode
+
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs
+
+bcftools view -Oz \
+    -f 'PASS,.' \
+    HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.vcf.gz \
+    -o HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz
+
+tabix HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz
+```
+```
+## bcftools stats
+
+# SN	[2]id	[3]key	[4]value
+SN	0	number of samples:	1
+SN	0	number of records:	5410903
+SN	0	number of no-ALTs:	488062
+SN	0	number of SNPs:	3970930
+SN	0	number of MNPs:	0
+SN	0	number of indels:	957573
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	4922841
+SN	0	number of multiallelic SNP sites:	3965268
+```
+
+### Results for `dragen_maximum_quality` mode
+
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs
+
+bcftools view -Oz \
+    -f 'PASS,.' \
+    HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.vcf.gz \
+    -o HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz
+
+tabix HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz
+```
+```
+## bcftools stats
+
+# SN	[2]id	[3]key	[4]value
+SN	0	number of samples:	1
+SN	0	number of records:	5412432
+SN	0	number of no-ALTs:	487153
+SN	0	number of SNPs:	3972167
+SN	0	number of MNPs:	0
+SN	0	number of indels:	958344
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	4925279
+SN	0	number of multiallelic SNP sites:	3957532
+
+```
+
+
