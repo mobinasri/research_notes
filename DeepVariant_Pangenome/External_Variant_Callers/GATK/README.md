@@ -366,7 +366,7 @@ SN	0	number of multiallelic SNP sites:	3965268
 QUERY_VCF="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz"
 TRUTH_VCF="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
 CONF_BED="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark_noinconsistent.bed"
-REF_FASTA="/private/groups/patenlab/masri/internship/external_callers/data/ref$ gunzip GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz"
+REF_FASTA="/private/groups/patenlab/masri/internship/external_callers/data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna"
 OUT_DIR="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence/happy"
 OUT_PREFIX="${OUT_DIR}/dragen_functional_equivalence"
 BASE_DIR="/private/groups/patenlab/masri/internship/external_callers"
@@ -377,8 +377,8 @@ EMAIL="masri@ucsc.edu"
 
 mkdir -p ${OUT_DIR}
 sbatch      --job-name=run_happy_dragen_functional_equivalence \
-            --cpus-per-task=32 \
-            --mem=32G \
+            --cpus-per-task=16 \
+            --mem=16G \
             --mail-user=${EMAIL} \
             --output=${OUT_DIR}/run_happy_%A_%a.log \
             --partition=long  \
