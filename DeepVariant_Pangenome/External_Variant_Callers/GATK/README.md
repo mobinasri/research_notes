@@ -366,7 +366,7 @@ SN	0	number of multiallelic SNP sites:	3965268
 QUERY_VCF="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz"
 TRUTH_VCF="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
 CONF_BED="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark_noinconsistent.bed"
-REF_FASTA="/private/groups/patenlab/masri/internship/external_callers/data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna"
+REF_FASTA="/private/groups/patenlab/masri/internship/external_callers/data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
 OUT_DIR="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence/happy"
 OUT_PREFIX="${OUT_DIR}/dragen_functional_equivalence"
 BASE_DIR="/private/groups/patenlab/masri/internship/external_callers"
@@ -418,6 +418,38 @@ SN	0	number of others:	0
 SN	0	number of multiallelic sites:	4925279
 SN	0	number of multiallelic SNP sites:	3957532
 
+```
+
+### Run hap.py for `dragen_functional_equivalence` mode
+
+```
+QUERY_VCF="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz"
+TRUTH_VCF="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
+CONF_BED="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark_noinconsistent.bed"
+REF_FASTA="/private/groups/patenlab/masri/internship/external_callers/data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+OUT_DIR="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality/happy"
+OUT_PREFIX="${OUT_DIR}/dragen_maximum_quality"
+BASE_DIR="/private/groups/patenlab/masri/internship/external_callers"
+
+RUN_HAPPY_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_happy.sh"
+
+EMAIL="masri@ucsc.edu"
+
+mkdir -p ${OUT_DIR}
+sbatch      --job-name=run_happy_dragen_maximum_quality \
+            --cpus-per-task=16 \
+            --mem=16G \
+            --mail-user=${EMAIL} \
+            --output=${OUT_DIR}/run_happy_%A_%a.log \
+            --partition=long  \
+            --time=6:00:00 \
+            ${RUN_HAPPY_BASH} \
+            --truth ${TRUTH_VCF} \
+            --query ${QUERY_VCF} \
+            --bed ${CONF_BED} \
+            --ref ${REF_FASTA} \
+            --output_prefix ${OUT_PREFIX} \
+            --base_dir ${BASE_DIR}
 ```
 
 
