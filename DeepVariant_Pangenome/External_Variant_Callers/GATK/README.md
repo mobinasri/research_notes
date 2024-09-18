@@ -420,7 +420,7 @@ SN	0	number of multiallelic SNP sites:	3957532
 
 ```
 
-### Run hap.py for `dragen_functional_equivalence` mode
+### Run hap.py for `dragen_maximum_quality` mode
 
 ```
 QUERY_VCF="/private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz"
