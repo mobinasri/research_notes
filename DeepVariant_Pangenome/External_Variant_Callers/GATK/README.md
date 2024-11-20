@@ -334,7 +334,122 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
 
 ## Results
 
-### Results for `dragen_functional_equivalence` mode
+### Initial stats for `regular` mode (v4.6)
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs
+
+bcftools view -Oz \
+    -f 'PASS,.' \
+    HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz \
+    -o HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
+
+tabix HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
+```
+```
+## bcftools stats
+
+# SN	[2]id	[3]key	[4]value
+SN	0	number of samples:	1
+SN	0	number of records:	45055671
+SN	0	number of no-ALTs:	39974778
+SN	0	number of SNPs:	4121887
+SN	0	number of MNPs:	0
+SN	0	number of indels:	964861
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	5080893
+SN	0	number of multiallelic SNP sites:	4106810
+```
+
+### Run hap.py for `regular` mode (v4.6)
+
+```
+QUERY_VCF="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz"
+TRUTH_VCF="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
+CONF_BED="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark_noinconsistent.bed"
+REF_FASTA="/private/groups/patenlab/masri/internship/external_callers/data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+OUT_DIR="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v4.6/happy"
+OUT_PREFIX="${OUT_DIR}/regular_v4.6"
+BASE_DIR="/private/groups/patenlab/masri/internship/external_callers"
+
+RUN_HAPPY_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_happy.sh"
+
+EMAIL="masri@ucsc.edu"
+
+mkdir -p ${OUT_DIR}
+sbatch      --job-name=run_happy_regular_v4.6 \
+            --cpus-per-task=16 \
+            --mem=16G \
+            --mail-user=${EMAIL} \
+            --output=${OUT_DIR}/run_happy_%A_%a.log \
+            --partition=long  \
+            --time=6:00:00 \
+            ${RUN_HAPPY_BASH} \
+            --truth ${TRUTH_VCF} \
+            --query ${QUERY_VCF} \
+            --bed ${CONF_BED} \
+            --ref ${REF_FASTA} \
+            --output_prefix ${OUT_PREFIX} \
+            --base_dir ${BASE_DIR}
+```
+
+### Initial stats for `regular` mode (v3)
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs
+
+bcftools view -Oz \
+    -f 'PASS,.' \
+    HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz \
+    -o HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
+
+tabix HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
+```
+
+```
+## bcftools stats
+
+# SN	[2]id	[3]key	[4]value
+SN	0	number of samples:	1
+SN	0	number of records:	48731937
+SN	0	number of no-ALTs:	43664349
+SN	0	number of SNPs:	4111882
+SN	0	number of MNPs:	0
+SN	0	number of indels:	961392
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	5067588
+SN	0	number of multiallelic SNP sites:	4106196
+```
+### Run hap.py for `regular` mode (v3)
+```
+QUERY_VCF="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz"
+TRUTH_VCF="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
+CONF_BED="/private/groups/patenlab/masri/internship/external_callers/data/giab/HG003_GRCh38_1_22_v4.2.1_benchmark_noinconsistent.bed"
+REF_FASTA="/private/groups/patenlab/masri/internship/external_callers/data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+OUT_DIR="/private/groups/patenlab/masri/internship/external_callers/results/GATK/regular_v3/happy"
+OUT_PREFIX="${OUT_DIR}/regular_v3"
+BASE_DIR="/private/groups/patenlab/masri/internship/external_callers"
+
+RUN_HAPPY_BASH="/private/groups/patenlab/masri/internship/external_callers/apps/run_happy.sh"
+
+EMAIL="masri@ucsc.edu"
+
+mkdir -p ${OUT_DIR}
+sbatch      --job-name=run_happy_regular_v4.6 \
+            --cpus-per-task=16 \
+            --mem=16G \
+            --mail-user=${EMAIL} \
+            --output=${OUT_DIR}/run_happy_%A_%a.log \
+            --partition=long  \
+            --time=6:00:00 \
+            ${RUN_HAPPY_BASH} \
+            --truth ${TRUTH_VCF} \
+            --query ${QUERY_VCF} \
+            --bed ${CONF_BED} \
+            --ref ${REF_FASTA} \
+            --output_prefix ${OUT_PREFIX} \
+            --base_dir ${BASE_DIR}
+```
+
+### Initial stats for `dragen_functional_equivalence` mode
 
 ```
 cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs
@@ -392,7 +507,7 @@ sbatch      --job-name=run_happy_dragen_functional_equivalence \
             --base_dir ${BASE_DIR}
 ```
 
-### Results for `dragen_maximum_quality` mode
+### Initial stats for `dragen_maximum_quality` mode
 
 ```
 cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs
