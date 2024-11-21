@@ -267,3 +267,10 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --sample_csv  ${WORKING_DIR}/data_table.csv \
             --input_json_path ${WORKING_DIR}/${WDL_NAME}_input_jsons/\${SAMPLE_ID}_${WDL_NAME}.json
 ```
+
+#### Copy gbz files with _64 and _32 to gs bucket
+gs url : `gs://pepper-deepvariant/mobinasri/haplotype_sampling/giab_samples/non_diploid_sampling/`
+```
+cd /private/groups/patenlab/masri/haplotype_sampling/giab_samples/non_diploid_sampling
+for i in $(find . | grep ".gbz$" | grep -e"_32" -e"_64");do gsutil cp $i gs://pepper-deepvariant/mobinasri/haplotype_sampling/giab_samples/non_diploid_sampling/ ;done
+```
