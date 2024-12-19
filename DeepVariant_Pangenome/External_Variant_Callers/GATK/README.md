@@ -629,22 +629,21 @@ SNP	PASS	3327496	3305898	21598	3871147	13313	551103	3141	948	0.993509	0.99599	0.
 
 ## Copying vcf files to gs bucket
 ```
-gsutil ls -R gs://pepper-deepvariant/mobinasri/pangenome_paper/ | grep vcf
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz.tbi
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.vcf.gz.tbi
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz.tbi
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.vcf.gz.tbi
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz.tbi
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz.tbi
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz.tbi
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz
-gs://pepper-deepvariant/mobinasri/pangenome_paper/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz.tbi
-
+gsutil ls -R gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers | grep vcf
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.PASS.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_functional_equivalence/HG003_GATK_v4.6_dragen_functional_equivalence/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_functional_equivalence.hard-filtered.rb.g.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.PASS.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/dragen_maximum_quality/HG003_GATK_v4.6_dragen_maximum_quality/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Dragen_max_qual.hard-filtered.rb.g.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.PASS.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers/GATK/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Novaseq_35x_GATK_Regular.rb.g.vcf.gz.tbi
 ```
