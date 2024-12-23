@@ -1,4 +1,4 @@
-# Run GATK on HG003 Element 1000bp_ins in three modes of GATK-v4.6 ( and one mode of GATK-v3)
+# Run GATK on HG003 Element 1000bp_ins in four modes (3 modes of GATK-v4.6 + 1 mode of GATK-v3)
 ### (Repeating https://github.com/mobinasri/research_notes/edit/main/DeepVariant_Pangenome/External_Variant_Callers/GATK/README.md for Element data)
 
 This doc contains wdls for running GATK. The wdls were updated last time with GATKv4.6.0
