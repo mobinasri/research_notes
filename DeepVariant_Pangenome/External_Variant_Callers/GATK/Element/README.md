@@ -185,3 +185,7 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --input_json ${INPUT_JSON_PATH}
 ```
 
+## Copying vcf files to gs bucket
+```
+
+```
