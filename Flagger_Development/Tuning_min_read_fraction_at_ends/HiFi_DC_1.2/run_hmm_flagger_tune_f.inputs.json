@@ -1,0 +1,11 @@
+{
+	"working_dir" : "/private/groups/patenlab/masri/t2t/HG002_v1.1/falsifier_runs_oct_2024/training_validation/tune_min_read_fraction_at_ends/HiFi_DC_1.2",
+	"platform" : "HiFi_DC_1.2",
+	"fai" : "/private/groups/patenlab/masri/t2t/HG002_v1.1/falsifier_runs_oct_2024/training_validation/rate_2perc/falsified.rate_2perc.train_val.dip.fa.fai",
+	"cov_file_path" : "/private/groups/patenlab/masri/t2t/HG002_v1.1/falsifier_runs_oct_2024/training_validation/tune_min_read_fraction_at_ends/HiFi_DC_1.2/HG002.HiFi_DC_1.2.minimap2_2.28.t2t_v1.1_rate_2perc.train_val.corrected.downsample_1.0.validation.truth_added.cov.gz",
+	"window_len" : 16000 ,
+	"flagger_docker":"mobinasri/flagger:v1.2.0-dev--45f77db22410e065427ec8e49a399d294c8c66bf" ,
+	"misassembly_truth_bed": "/private/groups/patenlab/masri/t2t/HG002_v1.1/falsifier_runs_oct_2024/training_validation/rate_2perc/falsified.rate_2perc.train_val.mis_assemblies.bed",
+	"model_type": "trunc_exp_gaussian"
+}
+
