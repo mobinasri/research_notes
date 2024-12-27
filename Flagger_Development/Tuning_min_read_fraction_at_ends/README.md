@@ -28,3 +28,7 @@ The json files:
 - [HiFi tsv](https://github.com/mobinasri/research_notes/blob/main/Flagger_Development/Tuning_min_read_fraction_at_ends/HiFi_DC_1.2/tune_read_frac_table_HiFi_DC_1.2.tsv)
 - [ONT-R10 tsv](https://github.com/mobinasri/research_notes/blob/main/Flagger_Development/Tuning_min_read_fraction_at_ends/ONT_R1041_Dorado/tune_read_frac_table_ONT_R1041_Dorado.tsv)
 - [ONT-R9 tsv](https://github.com/mobinasri/research_notes/blob/main/Flagger_Development/Tuning_min_read_fraction_at_ends/ONT_R941_Guppy6.3.7/tune_read_frac_table_ONT_R941_Guppy6.3.7.tsv)
+## Optimal -f values 
+- HiFi : 0.95
+- ONT-R9 : 1.0
+- ONT-R10 : 0.8
