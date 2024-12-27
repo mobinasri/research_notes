@@ -2,9 +2,7 @@
 
 ## Overview
 
-HMM-Flagger-v1.2 will have a new parameter for fixing false positive calls at contig ends. This parameter determines the minimum fraction of a read that 
-should be mapped to a contig end so that the mapper will report it as a valid mapping. This fraction can be used for adjusting coverage expectations at contig ends. 
-Most of the false positive calls that are expected to be removed with this parameter are from the false duplication category. They are called only because of the natural lower read coverage at contig ends but not because of the existence of a real misassembly.
+HMM-Flagger-v1.2 introduces a new parameter designed to reduce false positive calls at contig ends. This parameter specifies the minimum fraction of a read that must be mapped to a contig end for the mapper to consider it a valid mapping. By adjusting this fraction, users can better manage coverage expectations at contig ends. Most of the false positive calls addressed by this parameter belong to the false duplication category, arising from naturally lower read coverage at contig ends rather than actual misassemblies.
 
 For simplicity I restricted this tuning experiment to the reads mapped with minimap2 to the validation contigs of the HG002-T2T assembly falsified with a misassembly rate of 2%. We already have that from the output of the workflow that I used for tuning the alpha matrix.
 
