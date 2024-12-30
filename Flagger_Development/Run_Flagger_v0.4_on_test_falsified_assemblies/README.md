@@ -28,7 +28,7 @@ python3  ${WORKING_DIR}/launch_from_table.py \
             --workflow_name ${WDL_NAME}
 ```
 
-## Run jobs
+## Run jobs (12 jobs in total)
 ```
 ## Make sure you are in the working directory
 cd ${WORKING_DIR}
