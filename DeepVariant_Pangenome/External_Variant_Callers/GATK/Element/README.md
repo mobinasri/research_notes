@@ -79,6 +79,12 @@ total 86G
 ```
 
 ### Platform should be uppercase in ubam header
+This is due to this bug I received in `regular_v3` and `regular_v4.6` modes
+
+```
+ERROR::INVALID_PLATFORM_VALUE:Read name HG003_Element, The platform (PL) attribute (element) + was not one of the valid values for read group
+```
+It seems that I should change `element` to `ELEMENT` to have a valid PL based on sam specification.
 ```
 # get header and modify PL
 cd /private/groups/patenlab/masri/internship/external_callers/data/element/uBAM/HG003-Element/analysis/paired-fastq-to-unmapped-bam_outputs
@@ -100,10 +106,10 @@ java -jar /usr/picard/picard.jar ReplaceSamHeader \
 ### run GATK in regular mode (no DRAGEN and `use_gatk3_haplotype_caller = true`)
 
 ```
-cd /private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/regular_v3
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/regular_v3/rerun
 
 WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
-INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/regular_v3/gatk_v3_regular.json"
+INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/regular_v3/rerun/gatk_v3_regular.json"
 SAMPLE_NAME="HG003_Element_GATK_v3_regular_mode"
 WDL_NAME=$(basename ${WDL_PATH%%.wdl})
 mkdir -p ${WDL_NAME}_logs
@@ -202,6 +208,35 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --sample_name ${SAMPLE_NAME} \
             --input_json ${INPUT_JSON_PATH}
 ```
+
+## Bug while running `GATK_v4.6_dragen_functional_equivalence`:
+```
+	[139869693069056]	ERROR: This thread caught an exception first
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	When maskLen < 15, the function ssw_align doesn't return 2nd best alignment information.
+	Error: : Invalid argument: /usr/gitc/temp/DRAGMAP-1.2.1/src/lib/sequences/Seed.cpp(64): Throw in function dragenos::sequences::Seed::Data dragenos::sequences::Seed::getPrimaryData(bool) const
+	Dynamic exception type: boost::wrapexcept<dragenos::common::PreConditionException>
+	std::exception::what: Requesting primary data for an invalid seed
+	: Requesting primary data for an invalid seed
+
+```
+It seems that this problem is mentioned and fixed in [DRAGMAP github](https://github.com/Illumina/DRAGMAP/issues/23) repo but it is not yet updated in [warp repo](https://github.com/broadinstitute/warp/blob/2fffa8750e4c42832aaafe65df63d06a44c31f96/tasks/broad/DragmapAlignment.wdl#L34) (the docker should be updated with v1.3 of DRAGMAP).
 
 ## Copying vcf files to gs bucket
 ```
