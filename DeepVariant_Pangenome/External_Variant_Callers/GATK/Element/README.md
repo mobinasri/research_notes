@@ -78,6 +78,24 @@ total 86G
 -rwxr--r-- 1 masri patenlab  78 Dec 23 16:16 HG003.ubam.list
 ```
 
+### Platform should be uppercase in ubam header
+```
+# get header and modify PL
+cd /private/groups/patenlab/masri/internship/external_callers/data/element/uBAM/HG003-Element/analysis/paired-fastq-to-unmapped-bam_outputs
+samtools view -H HG003_Element.unmapped.bam > HG003_Element.unmapped.header.sam
+sed 's|PL:element|PL:ELEMENT|g' HG003_Element.unmapped.header.sam > HG003_Element.unmapped.header.modified.sam
+
+# get docker and run interactively
+docker run -it --rm -v/private/groups/patenlab/masri:/private/groups/patenlab/masri -u $(id -u):$(id -g) us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10
+
+cd /private/groups/patenlab/masri/internship/external_callers/data/element/uBAM/HG003-Element/analysis/paired-fastq-to-unmapped-bam_outputs
+
+# make a new bam with new header
+java -jar /usr/picard/picard.jar ReplaceSamHeader \
+    I=HG003_Element.unmapped.bam \
+    HEADER=HG003_Element.unmapped.header.modified.sam \
+    O=HG003_Element.unmapped.PL_ELEMENT.bam
+```
 
 ### run GATK in regular mode (no DRAGEN and `use_gatk3_haplotype_caller = true`)
 
