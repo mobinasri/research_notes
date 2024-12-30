@@ -1,4 +1,5 @@
 # Run Flagger v0.4 on test falsified assemblies
+Here I run non-HMM Flagger (v0.4) on test falsified assemblies (two misassembly rates; 0.5% and 2%) for 3 different platforms; HiFi_DC_1.2, ONT_R9 and ONT_R10. I'm running Flagger-v0.4 on each bam file with two downsampling rates; 1.0 and 0.5.
 
 ## Create json files
 ```
