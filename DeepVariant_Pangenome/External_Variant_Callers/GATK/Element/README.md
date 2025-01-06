@@ -185,7 +185,7 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
 
 ### run GATK in `dragen_maximum_quality` mode
 ```
-cd /private/groups/patenlab/masri/internship/external_callers/results/GATK/dragen_maximum_quality
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/dragen_maximum_quality
 
 WDL_PATH="/private/groups/patenlab/masri/internship/external_callers/apps/warp/pipelines/broad/dna_seq/germline/single_sample/wgs/WholeGenomeGermlineSingleSample.wdl"
 INPUT_JSON_PATH="/private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/dragen_maximum_quality/dragen_mode_maximum_quality.json"
