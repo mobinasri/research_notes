@@ -129,6 +129,16 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --sample_name ${SAMPLE_NAME} \
             --input_json ${INPUT_JSON_PATH}
 ```
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/regular_v3/rerun/HG003_Element_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs
+
+bcftools view -Oz \
+    -f 'PASS,.' \
+    HG003_Element_1000bp_ins_GATK_Regular_v3.rb.g.vcf.gz \
+    -o HG003_Element_1000bp_ins_GATK_Regular_v3.rb.g.PASS.vcf.gz
+
+tabix  HG003_Element_1000bp_ins_GATK_Regular_v3.rb.g.PASS.vcf.gz
+```
 
 ### run GATK in regular mode (no DRAGEN and `use_gatk3_haplotype_caller = false`)
 
@@ -155,6 +165,17 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
             --wdl ${WDL_PATH} \
             --sample_name ${SAMPLE_NAME} \
             --input_json ${INPUT_JSON_PATH}
+```
+
+```
+cd /private/groups/patenlab/masri/internship/external_callers/results/GATK_Element/regular_v4.6/HG003_Element_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs
+
+bcftools view -Oz \
+    -f 'PASS,.' \
+    HG003_Element_1000bp_ins_GATK_Regular_v4.6.rb.g.vcf.gz \
+    -o HG003_Element_1000bp_ins_GATK_Regular_v4.6.rb.g.PASS.vcf.gz
+
+tabix  HG003_Element_1000bp_ins_GATK_Regular_v4.6.rb.g.PASS.vcf.gz
 ```
 
 ### run GATK in `dragen_functional_equivalence` mode
