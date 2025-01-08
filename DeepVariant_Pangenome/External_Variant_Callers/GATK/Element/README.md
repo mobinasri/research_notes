@@ -261,5 +261,18 @@ It seems that this problem is mentioned and fixed in [DRAGMAP github](https://gi
 
 ## Copying vcf files to gs bucket
 ```
+gsutil ls -R gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element | grep ".vcf.gz"
 
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v3.rb.g.PASS.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v3.rb.g.PASS.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v3.rb.g.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v3/HG003_GATK_v3_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v3.rb.g.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v4.6.rb.g.PASS.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v4.6.rb.g.PASS.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v4.6.rb.g.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/GATK/regular_v4.6/HG003_GATK_v4.6_regular_mode/analysis/WholeGenomeGermlineSingleSample_outputs/HG003_Element_1000bp_ins_GATK_Regular_v4.6.rb.g.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/octopus_v0.7.4/HG003.element.cloudbreak.1000bp_ins.bwa_mem.hg38.octopus.no_forest.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/octopus_v0.7.4/HG003.element.cloudbreak.1000bp_ins.bwa_mem.hg38.octopus.no_forest.vcf.gz.tbi
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/octopus_v0.7.4/HG003.element.cloudbreak.1000bp_ins.vg.grch38.octopus.no_forest.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/external_callers_element/octopus_v0.7.4/HG003.element.cloudbreak.1000bp_ins.vg.grch38.octopus.no_forest.vcf.gz.tbi
 ```
