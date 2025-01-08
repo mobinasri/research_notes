@@ -339,10 +339,16 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
 ```
 
 #### Copy gbz files with _16, _32, and _64 to gs bucket
-gs url : `gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/`
 ```
-cd /private/groups/patenlab/masri/haplotype_sampling/HG002/non_diploid_sampling
-for i in $(find . | grep ".gbz$" | grep -e"_16" -e"_32" -e"_64");do gsutil cp $i gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/ ;done
+gsutil ls gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/
+
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/HG002.element.cloudbreak.1000bp_ins.hap_num_16.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/HG002.element.cloudbreak.1000bp_ins.hap_num_32.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/HG002.element.cloudbreak.1000bp_ins.hap_num_64.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/HG002.novaseq.pcr-free.hap_num_16.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/HG002.novaseq.pcr-free.hap_num_32.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG002/non_diploid_sampling/HG002.novaseq.pcr-free.hap_num_64.CHM13_removed.gbz
+
 ```
 
 ### HG001 illumina and Element (with 16,32,64 haplotypes, non-diploid)
@@ -409,8 +415,13 @@ sbatch      --job-name=${WDL_NAME}_${USERNAME} \
 ```
 
 #### Copy gbz files with _16, _32, and _64 to gs bucket
-gs url : `gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/`
 ```
-cd /private/groups/patenlab/masri/haplotype_sampling/HG001/non_diploid_sampling
-for i in $(find . | grep ".gbz$" | grep -e"_16" -e"_32" -e"_64");do gsutil cp $i gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/ ;done
+gsutil ls gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/
+
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.element.cloudbreak.1000bp_ins.hap_num_16.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.element.cloudbreak.1000bp_ins.hap_num_32.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.element.cloudbreak.1000bp_ins.hap_num_64.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.novaseq.pcr-free.hap_num_16.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.novaseq.pcr-free.hap_num_32.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.novaseq.pcr-free.hap_num_64.CHM13_removed.gbz
 ```
