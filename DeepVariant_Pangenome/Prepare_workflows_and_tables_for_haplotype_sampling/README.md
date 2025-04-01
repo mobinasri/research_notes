@@ -528,3 +528,13 @@ cd /private/groups/patenlab/masri/haplotype_sampling/element_HG003/non_diploid/r
 
 gsutil cp *.gbz gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/
 ```
+
+```
+gsutil ls gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/HG003.element.cloudbreak.1000bp_ins.vg.grch38.hap_num_16.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/HG003.element.cloudbreak.1000bp_ins.vg.grch38.hap_num_2.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/HG003.element.cloudbreak.1000bp_ins.vg.grch38.hap_num_32.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/HG003.element.cloudbreak.1000bp_ins.vg.grch38.hap_num_4.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/HG003.element.cloudbreak.1000bp_ins.vg.grch38.hap_num_64.CHM13_removed.gbz
+gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/HG003.element.cloudbreak.1000bp_ins.vg.grch38.hap_num_8.CHM13_removed.gbz
+```
