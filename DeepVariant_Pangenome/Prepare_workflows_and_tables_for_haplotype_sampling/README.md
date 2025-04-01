@@ -431,7 +431,9 @@ gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/
 
 I noticed that upstream and downstream of chr9 centromere all of the sampled haplotypes (for HG003 Element data) are exactly same as the reference. This induced many errors around the centromere in chr9 when we ran pangenome-aware DeepVariant with personalized pangenome (32 haplotypes). Those errors were absent when we used full clipped pangenome (88 haplotypes). Jouni said that this is because the region is in a ~27 Mbp snarl. If a haplotype has an assembly gap within that region, we cannot sample it. Mostly because we use accession numbers rather than chromosome names as sequence names. 
 
-Jouni said it might be worth trying the latest vg version. I modified the haplotype sampling wdl so that it can take the latest vg docker image `quay.io/vgteam/vg:v1.64.1` and rebuild the haplotype index file. Next I run the wdl for creating haplotype sampled graph.
+Jouni said it might be worth trying the latest vg version. I modified the haplotype sampling wdl so that it can take the latest vg docker image `quay.io/vgteam/vg:v1.64.1` and rebuild the haplotype index file. (this commit: https://github.com/mobinasri/vg_wdl/commit/6f762c281cea7e66a8c1c5a6039e355befdebdba )
+
+Next I run the wdl for creating haplotype sampled graph.
 
 
 ```
@@ -456,7 +458,7 @@ sample_id,alignment_bam_array,alignment_bai_array
 HG003.element.cloudbreak.1000bp_ins.vg.grch38,"['https://storage.googleapis.com/brain-genomics/awcarroll/element/vg/HG003.element.cloudbreak.1000bp_ins.vg.grch38.bam']","['https://storage.googleapis.com/brain-genomics/awcarroll/element/vg/HG003.element.cloudbreak.1000bp_ins.vg.grch38.bam.bai']"
 ```
 
-#### create json files
+#### Create json files
 ```
 # set working directory
 WORKING_DIR="/private/groups/patenlab/masri/haplotype_sampling/element_HG003/non_diploid"
@@ -484,7 +486,7 @@ python3 /private/groups/patenlab/masri/apps/hprc_intermediate_assembly/hpc/launc
 
 ```
 
-#### run workflow
+#### Run workflow
 ```
 ## Make sure you are in the working directory
 cd ${WORKING_DIR}
