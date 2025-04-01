@@ -425,3 +425,104 @@ gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/
 gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.novaseq.pcr-free.hap_num_32.CHM13_removed.gbz
 gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG001/non_diploid_sampling/HG001.novaseq.pcr-free.hap_num_64.CHM13_removed.gbz
 ```
+
+### Comment 6 : 04/01/2025 
+### Issue with the sampled haplotypes in chr9 and using vg-v1.64.1 for sampling
+
+I noticed that upstream and downstream of chr9 centromere all of the sampled haplotypes (for HG003 Element data) are exactly same as the reference. This induced many errors around the centromere in chr9 when we ran pangenome-aware DeepVariant with personalized pangenome (32 haplotypes). Those errors were absent when we used full clipped pangenome (88 haplotypes). Jouni said that this is because the region is in a ~27 Mbp snarl. If a haplotype has an assembly gap within that region, we cannot sample it. Mostly because we use accession numbers rather than chromosome names as sequence names. 
+
+Jouni said it might be worth trying the latest vg version. I modified the haplotype sampling wdl so that it can take the latest vg docker image `quay.io/vgteam/vg:v1.64.1` and rebuild the haplotype index file. Next I run the wdl for creating haplotype sampled graph.
+
+
+```
+cat input_mapping_v1.64.1.csv
+
+input,type,value
+HaplotypeSampling.IN_OUTPUT_NAME_PREFIX,scalar,$input.sample_id
+HaplotypeSampling.DIPLOID,scalar,"false"
+HaplotypeSampling.INPUT_READ_FILE_ARRAY,array,$input.alignment_bam_array
+HaplotypeSampling.HAPLOTYPE_NUMBER_ARRAY,array,"[2, 4, 8, 16, 32, 64]"
+HaplotypeSampling.REFERENCE_FASTA,scalar,"/private/groups/patenlab/masri/common/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+HaplotypeSampling.IN_GBZ_FILE,scalar,"https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.1-mc-grch38/hprc-v1.1-mc-grch38.gbz"
+HaplotypeSampling.SAMPLE_NAME_TO_REMOVE,scalar,"CHM13"
+HaplotypeSampling.CORES,scalar,8
+HaplotypeSampling.DOCKER_IMAGE,scalar,"quay.io/vgteam/vg:v1.64.1"
+```
+
+```
+cat data_table.csv
+
+sample_id,alignment_bam_array,alignment_bai_array
+HG003.element.cloudbreak.1000bp_ins.vg.grch38,"['https://storage.googleapis.com/brain-genomics/awcarroll/element/vg/HG003.element.cloudbreak.1000bp_ins.vg.grch38.bam']","['https://storage.googleapis.com/brain-genomics/awcarroll/element/vg/HG003.element.cloudbreak.1000bp_ins.vg.grch38.bam.bai']"
+```
+
+#### create json files
+```
+# set working directory
+WORKING_DIR="/private/groups/patenlab/masri/haplotype_sampling/element_HG003/non_diploid"
+cd ${WORKING_DIR}
+
+## Save WDL path and name in environment variables
+WDL_PATH="/private/groups/patenlab/masri/apps/vg_wdl/workflows/haplotype_sampling_customized.wdl"
+WDL_FILENAME=$(basename ${WDL_PATH})
+WDL_NAME=${WDL_FILENAME%%.wdl}
+
+
+## Make a folder for saving files related to run e.g. input and output jsons
+cd ${WORKING_DIR}
+mkdir -p runs_toil_slurm_v1.64.1
+cd runs_toil_slurm_v1.64.1
+
+## Make a directory for saving input json files
+mkdir -p ${WDL_NAME}_input_jsons
+cd ${WDL_NAME}_input_jsons
+
+python3 /private/groups/patenlab/masri/apps/hprc_intermediate_assembly/hpc/launch_from_table.py \
+     --data_table ${WORKING_DIR}/data_table.csv \
+     --field_mapping ${WORKING_DIR}/input_mapping_v1.64.1.csv \
+     --workflow_name ${WDL_NAME}
+
+```
+
+#### run workflow
+```
+## Make sure you are in the working directory
+cd ${WORKING_DIR}
+
+## Set environment variables for sbatch
+USERNAME="masri"
+EMAIL="masri@ucsc.edu"
+TIME_LIMIT="48:00:00"
+
+## Partition should be modifed based on the available partitions on the server
+PARTITION="long"
+
+
+## Go to the execution directory
+mkdir -p runs_toil_slurm_v1.64.1/${WDL_NAME}_logs
+cd runs_toil_slurm_v1.64.1
+
+## Run jobs arrays
+sbatch      --job-name=${WDL_NAME}_${USERNAME} \
+            --cpus-per-task=48 \
+            --mem=256G \
+            --mail-user=${EMAIL} \
+            --mail-type=FAIL,END \
+            --output=${WDL_NAME}_logs/${WDL_NAME}_%A_%a.log \
+            --array=1%1  \
+            --time=${TIME_LIMIT} \
+            --partition=${PARTITION} \
+            /private/groups/hprc/qc_hmm_flagger/hprc_intermediate_assembly/hpc/toil_sbatch_single_machine.sh \
+            --wdl ${WDL_PATH} \
+            --sample_csv  ${WORKING_DIR}/data_table.csv \
+            --input_json_path ${WORKING_DIR}/runs_toil_slurm_v1.64.1/${WDL_NAME}_input_jsons/\${SAMPLE_ID}_${WDL_NAME}.json
+
+```
+
+
+#### Copy to gcp bucket
+```
+cd /private/groups/patenlab/masri/haplotype_sampling/element_HG003/non_diploid/runs_toil_slurm_v1.64.1/HG003.element.cloudbreak.1000bp_ins.vg.grch38/analysis/haplotype_sampling_customized_outputs
+
+gsutil cp *.gbz gs://pepper-deepvariant/mobinasri/haplotype_sampling/HG003/non_diploid_sampling/vg_v1.64.1/
+```
