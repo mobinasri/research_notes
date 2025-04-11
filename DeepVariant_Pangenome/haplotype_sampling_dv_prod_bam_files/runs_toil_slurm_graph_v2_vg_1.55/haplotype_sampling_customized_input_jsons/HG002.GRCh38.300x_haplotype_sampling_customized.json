@@ -1,0 +1,19 @@
+{
+  "HaplotypeSampling.IN_OUTPUT_NAME_PREFIX": "HG002.GRCh38.300x",
+  "HaplotypeSampling.DIPLOID": false,
+  "HaplotypeSampling.INPUT_READ_FILE_ARRAY": [
+    "https://storage.googleapis.com/brain-genomics/pichuan/share/pangenome-wgs-training-data/HG002.GRCh38.300x.bam"
+  ],
+  "HaplotypeSampling.HAPLOTYPE_NUMBER_ARRAY": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "HaplotypeSampling.REFERENCE_FASTA": "/private/groups/patenlab/masri/common/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa",
+  "HaplotypeSampling.HAPL_FILE": "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13/runs_toil_slurm/hprc-v2.0-mc-grch38-eval/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.CHM13_removed.hapl",
+  "HaplotypeSampling.IN_DIST_FILE": "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13/runs_toil_slurm/hprc-v2.0-mc-grch38-eval/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.CHM13_removed.dist",
+  "HaplotypeSampling.IN_GBZ_FILE": "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13/runs_toil_slurm/hprc-v2.0-mc-grch38-eval/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.CHM13_removed.gbz",
+  "HaplotypeSampling.CORES": 8,
+  "HaplotypeSampling.DOCKER_IMAGE": "quay.io/vgteam/vg:v1.55.0"
+}

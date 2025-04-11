@@ -1,0 +1,11 @@
+input,type,value
+HaplotypeSampling.IN_OUTPUT_NAME_PREFIX,scalar,$input.sample_id
+HaplotypeSampling.DIPLOID,scalar,"false"
+HaplotypeSampling.INPUT_READ_FILE_ARRAY,array,$input.alignment_bam_array
+HaplotypeSampling.HAPLOTYPE_NUMBER_ARRAY,array,"[8, 16, 32, 64]"
+HaplotypeSampling.REFERENCE_FASTA,scalar,"/private/groups/patenlab/masri/common/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+HaplotypeSampling.HAPL_FILE,scalar,"/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13/runs_toil_slurm/hprc-v2.0-mc-grch38-eval/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.CHM13_removed.hapl"
+HaplotypeSampling.IN_DIST_FILE,scalar,"/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13/runs_toil_slurm/hprc-v2.0-mc-grch38-eval/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.CHM13_removed.dist"
+HaplotypeSampling.IN_GBZ_FILE,scalar,"/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13/runs_toil_slurm/hprc-v2.0-mc-grch38-eval/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.CHM13_removed.gbz"
+HaplotypeSampling.CORES,scalar,8
+HaplotypeSampling.DOCKER_IMAGE,scalar,"quay.io/vgteam/vg:v1.55.0"
