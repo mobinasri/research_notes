@@ -1,6 +1,5 @@
 ### Comment 1 : 04/11/2025 
-
-### Remove chm13 from graph-v2.0 
+ 
 ### Creating haplotype-sampled HPRC-v2.0 graphs for 48 training production bam files 
 
 ```
