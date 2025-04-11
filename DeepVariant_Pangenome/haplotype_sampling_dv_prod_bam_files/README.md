@@ -1,5 +1,10 @@
 ### Comment 1 : 04/11/2025 
- 
+
+I removed chm13 reference from v2.0 graph using the commands explained here:
+https://github.com/mobinasri/research_notes/tree/main/DeepVariant_Pangenome/remove_chm13_graph_v2.0
+
+Then I used the new CHM13-free graph for haplotype sampling the 48 production bam files.
+
 ### Creating haplotype-sampled HPRC-v2.0 graphs for 48 training production bam files 
 
 ```
