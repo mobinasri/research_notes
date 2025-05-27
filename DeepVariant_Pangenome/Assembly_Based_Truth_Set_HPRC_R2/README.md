@@ -6,7 +6,7 @@ I follow the steps mentioned below to create some new truth sets using HPRC-Rele
 - Select 5 HPRC-R2 samples with phased diploid assemblies polished with DeepPolisher (using PacBio-HiFi and ONT data).
   Those samples should be absent from HPRC-R1 since we want to use graph-v1.1 for testing pangenome-aware DeepVariant.
 - Map assemblies to GRCh38 or CHM13-v2.0 and perform variant calling with dipcall (I prefer CHM13-v2.0 but I have to check if DRAGEN works with it)
-- Copy output VCF and high-confidence BED file along with related illumina read data in the gs bucket `gs://pepper-deepvariant/mobinasri`
+- Copy output VCF and high-confidence BED file along with related illumina read data to the gs bucket `gs://pepper-deepvariant/mobinasri`
 
 
 ### Select five samples
