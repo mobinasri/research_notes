@@ -7,3 +7,9 @@ I follow the steps mentioned below to create such truth sets:
   Those samples should be absent from HPRC-R1 since we want to use graph-v1.1 for testing pangenome-aware DeepVariant.
 - Map assemblies to GRCh38 or CHM13-v2.0 with dipcall (I prefer CHM13-v2.0 but I have to check if DRAGEN works with it)
 - Get output VCF and high-confidence BED file
+
+
+```
+cd /private/groups/patenlab/masri/internship/assembly_truth_sets
+wget https://raw.githubusercontent.com/human-pangenomics/hprc_intermediate_assembly/refs/heads/main/data_tables/assemblies_pre_release_v0.6.1.index.csv
+```
