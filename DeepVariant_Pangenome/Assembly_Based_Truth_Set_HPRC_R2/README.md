@@ -36,6 +36,36 @@ NA20346
 HG03209
 NA18879
 ```
+### Download references
+In the dipcall github page it was mentioned that:
+
+> The above is applied to autosomes and female chrX. For a male sample, parent1 is assumed to be the father and parent2 the mother. Dipcall treats PARs the same way as autosomes. However, outside PARs, dipcall filters out chrX regions covered by father contigs and filters out chrY regions covered by mother contigs. To make proper calls on sex chromosomes, users should hard mask PARs on the reference chrY.
+
+#### CHM13-v2.0
+```
+# chm13 reference
+wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/analysis_set/chm13v2.0.fa.gz
+
+# PAR regions
+wget https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/analysis_set/chm13v2.0_PAR.bed
+
+# remove chrY from PAR Bed
+cat chm13v2.0_PAR.bed | grep chrX > chm13v2.0_PAR.only_X.bed
+cat chm13v2.0_PAR.bed | grep chrY > chm13v2.0_PAR.only_Y.bed
+
+
+# hard-mask PAR-chrY
+gunzip chm13v2.0.fa.gz
+bedtools maskfasta -fi chm13v2.0.fa -bed chm13v2.0_PAR.only_Y.bed -fo chm13v2.0.PAR_Y_masked.fa
+
+# index
+samtools faidx chm13v2.0.PAR_Y_masked.fa
+```
+
+#### GRCH38
+```
+# GRCh38 reference
+```
 ### Run Dipcall
 ### Convert CRAM to FASTQ for short read data
 ### Copy to gs bucket
