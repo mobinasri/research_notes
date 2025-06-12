@@ -1,7 +1,6 @@
 ## Create assembly-based truth sets using HPRC-R2 assemblies
 
-The samples HG001-007 are commonly being used for training models for variant calling and the models might overfit to these samples therefore testing on the same samples
-cannot reveal such bias. To measure how much the models are overfit to these samples we should create some high-quality truth sets using samples other than HG001-007. 
+The HG001–HG007 samples are commonly used for training variant calling models. As a result, models may become overfit to these samples, and evaluating performance on the same data cannot effectively reveal such bias. To assess the extent of overfitting, it is essential to generate high-quality truth sets using samples outside of the HG001–HG007 set.
 I follow the steps mentioned below to create some new truth sets using HPRC-Release2 data:
 - Select 5 HPRC-R2 samples with phased diploid assemblies polished with DeepPolisher (using PacBio-HiFi and ONT data).
   Those samples should be absent from HPRC-R1 since we want to use graph-v1.1 for testing pangenome-aware DeepVariant.
