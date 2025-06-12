@@ -64,6 +64,21 @@ samtools faidx chm13v2.0.PAR_Y_masked.fa
 #### GRCH38
 ```
 # GRCh38 reference
+wget https://s3-us-west-2.amazonaws.com/human-pangenomics/working/HPRC_PLUS/GRCh38/assemblies/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+
+# PAR regions
+wget https://raw.githubusercontent.com/lh3/dipcall/refs/heads/master/data/hs38.PAR.bed
+
+# remove chrY from PAR Bed
+cat hs38.PAR.bed | grep chrX > hs38.PAR.only_X.bed
+cat hs38.PAR.bed | grep chrY > hs38.PAR.only_Y.bed
+
+# hard-mask PAR-chrY
+gunzip -c GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz > hs38.fa
+bedtools maskfasta -fi hs38.fa -bed hs38.PAR.only_Y.bed -fo hs38.PAR_Y_masked.fa
+
+# index
+samtools faidx hs38.PAR_Y_masked.fa
 ```
 ### Run Dipcall
 ### Convert CRAM to FASTQ for short read data
