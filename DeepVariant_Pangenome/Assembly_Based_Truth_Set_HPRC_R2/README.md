@@ -104,5 +104,18 @@ for i in $(find . | grep "dip.bed");do cat $i | grep -v -e"X" -e"Y" > ${i%%.bed}
 ```
 
 ### Convert CRAM to FASTQ for short read data
+
+### Map short reads to GRCh38 with vg-1.55
+
 ### Copy to gs bucket
 
+#### Copy Dipcall outputs
+```
+# for GRCh38
+cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_GRCh38
+for i in $(find . | grep -e "dip.vcf.gz" -e "dip.no_XY.bed" -e "dip.bed");do gsutil cp $i gs://pepper-deepvariant/mobinasri/pangenome_paper/hprc_r2_dipcall_call_sets/GRCh38_based/${i##./};done
+
+# for CHM13
+cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_CHM13
+for i in $(find . | grep -e "dip.vcf.gz" -e "dip.no_XY.bed" -e "dip.bed");do gsutil cp $i gs://pepper-deepvariant/mobinasri/pangenome_paper/hprc_r2_dipcall_call_sets/CHM13_based/${i##./};done
+```
