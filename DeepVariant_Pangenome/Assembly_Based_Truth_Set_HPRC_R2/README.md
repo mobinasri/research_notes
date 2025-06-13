@@ -81,15 +81,26 @@ bedtools maskfasta -fi hs38.fa -bed hs38.PAR.only_Y.bed -fo hs38.PAR_Y_masked.fa
 samtools faidx hs38.PAR_Y_masked.fa
 ```
 ### Run Dipcall
-I wrote a bash script for running dipcall, which is available in `dipcall_files/dipcall.bash`. I prepared input json files for running dipcall on the 5 samples selected above using both GRCh38 and chm13-v2.0 references. The json files are available in `dipcall_files/json_files`. I submitted dipcall jobs on UCSC Pheonix cluster using with these commands:
+I wrote a bash script for running dipcall, which is available in `dipcall_files/dipcall.bash`. I prepared input json files for running dipcall on the 5 samples selected above. I ran dipcall twice for each sample; once using GRCh38 and once using chm13-v2.0 as the reference. The json files are available in `dipcall_files/json_files`. I submitted dipcall jobs on the UCSC Pheonix cluster using the following commands:
 ```
-# for chm13
+# The input json files for the CHM13 reference are copied to this directory
 cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_CHM13
 for i in $(ls | grep json);do sbatch --cpus-per-task=32 ../../../apps/bash_scripts/dipcall.bash $i  ;done
 
-# for grch38
+# The input json files for the GRCh38 reference are copied to this directory
 cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_GRCh38
 for i in $(ls | grep json);do sbatch --cpus-per-task=32 ../../../apps/bash_scripts/dipcall.bash $i  ;done
+```
+
+To make the call set more conservative we might restrict our benchmarking analysis to autosomes. Therefore I created a new BED file per dipcall run by removing the sex chromosomes from the dipcall high-confidence BED file.
+```
+# for CHM13
+cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_CHM13
+for i in $(find . | grep "dip.bed");do cat $i | grep -v -e"X" -e"Y" > ${i%%.bed}.no_XY.bed;done
+
+# for GRCh38
+cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_GRCh38
+for i in $(find . | grep "dip.bed");do cat $i | grep -v -e"X" -e"Y" > ${i%%.bed}.no_XY.bed;done
 ```
 
 ### Convert CRAM to FASTQ for short read data
