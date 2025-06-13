@@ -19,21 +19,21 @@ wget https://raw.githubusercontent.com/human-pangenomics/HPP_Year1_Data_Freeze_v
 ```
 
 ```
-# select 5 samples randomly
+# select 5 samples randomly from trio assemblies
 cat assemblies_pre_release_v0.6.1.index.csv | head -n1 > assemblies_pre_release_v0.6.1.index.selected_five.csv
 cat hprc_year1_sample_metadata.txt | \
     cut -f1 | \
     grep -v -F -f - assemblies_pre_release_v0.6.1.index.csv | \
-    shuf -n5 >> assemblies_pre_release_v0.6.1.index.selected_five.csv
+    grep mat_hprc | shuf -n5 >> assemblies_pre_release_v0.6.1.index.selected_five.csv
 
 # list of R2 samples
 cat assemblies_pre_release_v0.6.1.index.selected_five.csv | awk -F',' '{print $1}'
 sample_id
-HG01975
-NA20809
-NA20346
-HG03209
-NA18879
+HG02984
+HG02280
+HG04184
+HG01255
+HG03831
 ```
 ### Download references
 In the dipcall github page it was mentioned that:
@@ -81,6 +81,17 @@ bedtools maskfasta -fi hs38.fa -bed hs38.PAR.only_Y.bed -fo hs38.PAR_Y_masked.fa
 samtools faidx hs38.PAR_Y_masked.fa
 ```
 ### Run Dipcall
+I wrote a bash script for running dipcall, which is available in `dipcall_files/dipcall.bash`. I prepared input json files for running dipcall on the 5 samples selected above using both GRCh38 and chm13-v2.0 references. The json files are available in `dipcall_files/json_files`. I submitted dipcall jobs on UCSC Pheonix cluster using with these commands:
+```
+# for chm13
+cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_CHM13
+for i in $(ls | grep json);do sbatch --cpus-per-task=32 ../../../apps/bash_scripts/dipcall.bash $i  ;done
+
+# for grch38
+cd /private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_GRCh38
+for i in $(ls | grep json);do sbatch --cpus-per-task=32 ../../../apps/bash_scripts/dipcall.bash $i  ;done
+```
+
 ### Convert CRAM to FASTQ for short read data
 ### Copy to gs bucket
 
