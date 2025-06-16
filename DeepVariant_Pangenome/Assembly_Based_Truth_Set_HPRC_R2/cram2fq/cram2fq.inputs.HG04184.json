@@ -1,0 +1,7 @@
+{
+	"cram_url" : "https://s3-us-west-2.amazonaws.com/human-pangenomics/working/HPRC/HG04184/raw_data/Illumina/child/HG04184.final.cram", 
+	"ref_fasta" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/GRCh38/hs38.fa",
+	"output_dir" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG04184",
+	"output_prefix" : "HG04184.illumina",
+	"other_options" : ""
+}

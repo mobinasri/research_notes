@@ -1,0 +1,12 @@
+{
+	"threads" : 32,
+	"fastq_r1" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG03831/HG03831.illumina.R1.fastq.gz",
+	"fastq_r2" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG03831/HG03831.illumina.R2.fastq.gz",
+	"gbz" : "/private/groups/patenlab/masri/haplotype_sampling/giab_samples/graph_files/hprc-v1.1-mc-grch38.gbz",
+	"hapl" : "/private/groups/patenlab/masri/haplotype_sampling/giab_samples/graph_files/hprc-v1.1-mc-grch38.hapl",
+	"sample_name" : "HG03831.illumina",
+	"output_dir" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/map_reads/graph_v1.1_grch38_vg_1.55/HG03831",
+	"output_suffix" : "graph_v1.1_grch38.vg_1.55",
+	"kmc_bin" : "/private/groups/patenlab/masri/apps/bin/kmc",
+	"vg_bin" : "/private/groups/patenlab/masri/apps/vg_1.55/vg"
+}

@@ -1,0 +1,11 @@
+{
+	"threads" : "32",
+	"dipcall_kit_dir" : "/private/groups/patenlab/masri/apps/dipcall.kit",
+	"paternal_fasta_url" : "https://s3-us-west-2.amazonaws.com/human-pangenomics/submissions/DC27718F-5F38-43B0-9A78-270F395F13E8--INT_ASM_PRODUCTION/HG01255/assemblies/freeze_2/HG01255_pat_hprc_r2_v1.0.1.fa.gz",
+	"maternal_fasta_url" : "https://s3-us-west-2.amazonaws.com/human-pangenomics/submissions/DC27718F-5F38-43B0-9A78-270F395F13E8--INT_ASM_PRODUCTION/HG01255/assemblies/freeze_2/HG01255_mat_hprc_r2_v1.0.1.fa.gz",
+	"reference_fasta" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/CHM13_v2/chm13v2.0.PAR_Y_masked.fa",
+	"PAR_X_bed" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/CHM13_v2/chm13v2.0_PAR.only_X.bed",
+	"output_dir" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_CHM13/HG01255",
+	"output_prefix" : "HG01255_hprc_r2_v1.0.1_dipcall_CHM13",
+	"other_options" : ""
+}
