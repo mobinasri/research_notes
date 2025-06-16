@@ -1,0 +1,11 @@
+input,type,value
+HaplotypeSampling.IN_OUTPUT_NAME_PREFIX,scalar,$input.sample_id
+HaplotypeSampling.DIPLOID,scalar,"false"
+HaplotypeSampling.INPUT_READ_FILE_ARRAY,array,$input.reads
+HaplotypeSampling.HAPLOTYPE_NUMBER_ARRAY,array,"[16, 32]"
+HaplotypeSampling.REFERENCE_FASTA,scalar,"/private/groups/patenlab/masri/common/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+HaplotypeSampling.HAPL_FILE,scalar,"https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.1-mc-grch38/hprc-v1.1-mc-grch38.hapl"
+HaplotypeSampling.IN_DIST_FILE,scalar,"https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.1-mc-grch38/hprc-v1.1-mc-grch38.dist"
+HaplotypeSampling.IN_GBZ_FILE,scalar,"https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.1-mc-grch38/hprc-v1.1-mc-grch38.gbz"
+HaplotypeSampling.SAMPLE_NAME_TO_REMOVE,scalar,"CHM13"
+HaplotypeSampling.CORES,scalar,8

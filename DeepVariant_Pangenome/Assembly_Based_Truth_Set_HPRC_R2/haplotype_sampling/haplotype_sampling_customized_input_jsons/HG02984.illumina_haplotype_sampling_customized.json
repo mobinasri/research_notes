@@ -1,0 +1,18 @@
+{
+  "HaplotypeSampling.IN_OUTPUT_NAME_PREFIX": "HG02984.illumina",
+  "HaplotypeSampling.DIPLOID": false,
+  "HaplotypeSampling.INPUT_READ_FILE_ARRAY": [
+    "/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG02984/HG02984.illumina.R1.fastq.gz",
+    "/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG02984/HG02984.illumina.R2.fastq.gz"
+  ],
+  "HaplotypeSampling.HAPLOTYPE_NUMBER_ARRAY": [
+    16,
+    32
+  ],
+  "HaplotypeSampling.REFERENCE_FASTA": "/private/groups/patenlab/masri/common/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa",
+  "HaplotypeSampling.HAPL_FILE": "https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.1-mc-grch38/hprc-v1.1-mc-grch38.hapl",
+  "HaplotypeSampling.IN_DIST_FILE": "https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.1-mc-grch38/hprc-v1.1-mc-grch38.dist",
+  "HaplotypeSampling.IN_GBZ_FILE": "https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.1-mc-grch38/hprc-v1.1-mc-grch38.gbz",
+  "HaplotypeSampling.SAMPLE_NAME_TO_REMOVE": "CHM13",
+  "HaplotypeSampling.CORES": 8
+}

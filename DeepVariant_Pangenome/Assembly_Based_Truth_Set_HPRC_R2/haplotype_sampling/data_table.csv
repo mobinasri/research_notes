@@ -1,0 +1,6 @@
+sample_id,reads
+HG01255.illumina,"['/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG01255/HG01255.illumina.R1.fastq.gz','/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG01255/HG01255.illumina.R2.fastq.gz']"
+HG02280.illumina,"['/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG02280/HG02280.illumina.R1.fastq.gz','/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG02280/HG02280.illumina.R2.fastq.gz']"
+HG02984.illumina,"['/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG02984/HG02984.illumina.R1.fastq.gz','/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG02984/HG02984.illumina.R2.fastq.gz']"
+HG03831.illumina,"['/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG03831/HG03831.illumina.R1.fastq.gz','/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG03831/HG03831.illumina.R2.fastq.gz']"
+HG04184.illumina,"['/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG04184/HG04184.illumina.R1.fastq.gz','/private/groups/patenlab/masri/internship/assembly_truth_sets/reads/HG04184/HG04184.illumina.R2.fastq.gz']"
