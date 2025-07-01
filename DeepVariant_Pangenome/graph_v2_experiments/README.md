@@ -72,10 +72,37 @@ sbatch /private/groups/patenlab/masri/apps/bash_scripts/happy.bash happy.inputs.
 ```
 
 
-### Upload output files into gcp bucket
+### Upload output files to the GCP bucket
 
-The vcf and bam files are all available in the bucket
+#### Haplotype-sampled GBZ files
+```
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/gbz_files/HG002.novaseq.pcr-free.chm13_removed.hap_num_16.gbz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/gbz_files/HG002.novaseq.pcr-free.chm13_removed.hap_num_32.gbz
 ```
 
+#### Read BAM files (Created with hap32 gbz files)
+```
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/read_mapping/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap32.bam
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/read_mapping/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap32.bam.bai
+```
+
+#### VCF files
+```
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.vcf.gz.tbi
+```
+
+#### Happy outputs (T2T and GIAB intersection BED file)
+```
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/t2t_and_giab_conf_happy/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.summary.csv
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/t2t_and_giab_conf_happy/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/t2t_and_giab_conf_happy/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.vcf.gz.tbi
+```
+
+#### Happy outputs (T2T BED file)
+```
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/t2t_conf_happy/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.summary.csv
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/t2t_conf_happy/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.vcf.gz
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_ec1M_vg_1.66/HG002/illumina/pang_aware_dv_hap32/t2t_conf_happy/HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.vg_1.66.hap_32_head737001992.vcf.gz.tbi
 ```
 
