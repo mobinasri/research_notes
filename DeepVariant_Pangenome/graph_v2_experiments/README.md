@@ -1,6 +1,6 @@
 ## Running pangenome-aware DeepVariant with HPRC graph-v2.0
 
-VG team has been working on generating new graphs using HPRC-Release2 assemblies. Based on the latest internal tests the accuracy of variant calling with the latest and greatest graph-v2.0 is 
+The VG team has been working on generating new graphs using HPRC-Release2 assemblies. Based on the latest internal tests the accuracy of variant calling with the latest and greatest graph-v2.0 is 
 at least comparable with graph-v1.1. I'm going to use the eval graph (without HG002 sample) to test pangenome-aware DeepVariant. We have to run haplotype sampling since the number of haplotypes 
 in graph-v2.0 is about 460 and we cannot put all of them in the DeepVariant pileup tensors. I generated haplotype-sampled graphs with 32 and 16 haplotypes and used the resulting gbz files for 
 mapping HG002 Illumina reads with vg-1.66 and variant calling with pangenome-aware DV-v1.9.0. 
