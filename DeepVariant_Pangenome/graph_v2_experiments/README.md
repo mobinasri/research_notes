@@ -22,7 +22,7 @@ bash run_remove_sample_from_gbz.sh
 
 I ran haplotype sampling with 32 and 16 haplotypes using the wdl [haplotype_sampling_customized.wdl](https://github.com/mobinasri/vg_wdl/blob/master/workflows/haplotype_sampling_customized.wdl).
 
-The related SLURM job was submitted on the UCSC Phoenix cluster using the tables and bash script available in the `remove_chm13/` directory.
+The related SLURM job was submitted on the UCSC Phoenix cluster using the tables and bash script available in the `haplotype_sampling/` directory.
 ```
 cd /private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/test_samples_vg_1.66
 bash run_haplotype_sampling.sh
@@ -48,7 +48,7 @@ https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv
 https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/may_2025/models/pangenome_aware_dv_32_haps/example_info.json
 ```
 
-The related SLURM job was submitted on the UCSC Phoenix cluster using the json file and bash script available in the `pang_aware_dv/hap_32` directory.
+The related SLURM job was submitted on the UCSC Phoenix cluster using the json file and bash script available in the `png_aware_dv/hap_32` directory.
 ```
 cd /private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_ec1M.vg_1.66/HG002_illumina/run_png_aware_dv/hap_32
 sbatch /private/groups/patenlab/masri/apps/bash_scripts/pangenome_aware_deepvariant.bash pangenome_aware_deepvariant.inputs.json
@@ -60,7 +60,7 @@ The output vcf file was benchmarked against the T2T-Q100-v1.1 truth set using tw
 The intersected BED file was created to measure the performance in easier regions.
 
 The related SLURM job was submitted on the UCSC Phoenix cluster using the json file and bash script available in the 
-`pang_aware_dv/hap_32/happy/t2t_and_giab_conf` and  `pang_aware_dv/hap_32/happy/t2t_conf` directories.
+`png_aware_dv/hap_32/happy/t2t_and_giab_conf` and  `png_aware_dv/hap_32/happy/t2t_conf` directories.
 ```
 # for T2T-v1.1 bed file
 cd /private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_ec1M.vg_1.66/HG002_illumina/run_png_aware_dv/hap_32/happy/t2t_conf
@@ -71,7 +71,20 @@ cd /private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_ec
 sbatch /private/groups/patenlab/masri/apps/bash_scripts/happy.bash happy.inputs.json
 ```
 
+### Links to Truth files
+```
+# GIAB-v4.2.1 for HG002
 
+https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG003_NA24149_father/NISTv4.2.1/GRCh38/
+
+# T2T-Q100-v1.1 for HG002
+
+https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/jan_2025/truth/hg002_t2t_v1.1/GRCh38_HG2-T2TQ100-V1.1_smvar.benchmark.bed
+
+https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/jan_2025/truth/hg002_t2t_v1.1/GRCh38_HG2-T2TQ100-V1.1_smvar_dipcall-z2k.vcf.gz
+
+https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/jan_2025/truth/hg002_t2t_v1.1/GRCh38_HG2-T2TQ100-V1.1_smvar_dipcall-z2k.vcf.gz.tbi
+```
 ### Upload output files to the GCP bucket
 
 #### Haplotype-sampled GBZ files
