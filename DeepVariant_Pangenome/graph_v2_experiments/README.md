@@ -6,7 +6,7 @@ in graph-v2.0 is about 460 and we cannot put all of them in the DeepVariant pile
 mapping HG002 Illumina reads with vg-1.66 and variant calling with pangenome-aware DV-v1.9.0. 
 The graphs are available in this directory on the UCSC Phoenix cluster `/private/groups/cgl/hprc-graphs/hprc-v2.0-feb28/snarl-filtering/`. I'm using the GRCh38-based graph for this analysis.
 
-### Removig CHM13 from graph-v2.0
+### Removing CHM13 from graph-v2.0
 
 During haplotype sampling the CHM13 reference will remain intact in the graph regardless of the reads we use for sampling. It is not possible to skip it while generating pileup tensors in DeepVariant
 so I removed the CHM13 reference from the original graph using the wdl [remove_sample_from_gbz.wdl](https://github.com/mobinasri/vg_wdl/blob/master/workflows/remove_sample_from_gbz.wdl). 
