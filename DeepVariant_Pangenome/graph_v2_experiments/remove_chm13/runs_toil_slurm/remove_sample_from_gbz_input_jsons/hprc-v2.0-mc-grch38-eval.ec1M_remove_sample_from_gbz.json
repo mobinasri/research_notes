@@ -1,0 +1,7 @@
+{
+  "RemoveSampleFromGraph.IN_GBZ_FILE": "/private/groups/cgl/hprc-graphs/hprc-v2.0-feb28/snarl-filtering/hprc-v2.0-mc-grch38-eval.ec1M.gbz",
+  "RemoveSampleFromGraph.CREATE_INDEX_OPTIONS": "--snarl-limit 1",
+  "RemoveSampleFromGraph.SAMPLE_NAME_TO_REMOVE": "CHM13",
+  "RemoveSampleFromGraph.CORES": 16,
+  "RemoveSampleFromGraph.DOCKER_IMAGE": "quay.io/vgteam/vg:v1.66.0"
+}

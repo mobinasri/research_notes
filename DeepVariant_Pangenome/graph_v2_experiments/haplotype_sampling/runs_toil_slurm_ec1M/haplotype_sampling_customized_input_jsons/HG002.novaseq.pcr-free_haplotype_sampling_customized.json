@@ -1,0 +1,18 @@
+{
+  "HaplotypeSampling.IN_OUTPUT_NAME_PREFIX": "HG002.novaseq.pcr-free",
+  "HaplotypeSampling.DIPLOID": false,
+  "HaplotypeSampling.INPUT_READ_FILE_ARRAY": [
+    "https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/jan_2025/fastq/HG002.novaseq.pcr-free.35x.R1.fastq.gz",
+    "https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/jan_2025/fastq/HG002.novaseq.pcr-free.35x.R2.fastq.gz"
+  ],
+  "HaplotypeSampling.HAPLOTYPE_NUMBER_ARRAY": [
+    16,
+    32
+  ],
+  "HaplotypeSampling.REFERENCE_FASTA": "/private/groups/patenlab/masri/common/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa",
+  "HaplotypeSampling.HAPL_FILE": "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13_vg_1.66/runs_toil_slurm/hprc-v2.0-mc-grch38-eval.ec1M/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.ec1M.CHM13_removed.hapl",
+  "HaplotypeSampling.IN_DIST_FILE": "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13_vg_1.66/runs_toil_slurm/hprc-v2.0-mc-grch38-eval.ec1M/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.ec1M.CHM13_removed.dist",
+  "HaplotypeSampling.IN_GBZ_FILE": "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/remove_chm13_vg_1.66/runs_toil_slurm/hprc-v2.0-mc-grch38-eval.ec1M/analysis/remove_sample_from_gbz_outputs/hprc-v2.0-mc-grch38-eval.ec1M.CHM13_removed.gbz",
+  "HaplotypeSampling.CORES": 8,
+  "HaplotypeSampling.DOCKER_IMAGE": "quay.io/vgteam/vg:v1.66.0"
+}

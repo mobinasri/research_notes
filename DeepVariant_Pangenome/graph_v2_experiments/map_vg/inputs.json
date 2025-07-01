@@ -1,0 +1,11 @@
+{
+	"threads" : 32,
+	"fastq_url_r1" : "https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/jan_2025/fastq/HG002.novaseq.pcr-free.35x.R1.fastq.gz",
+	"fastq_url_r2" : "https://storage.googleapis.com/brain-genomics-public/research/pangenome_aware_dv_paper/jan_2025/fastq/HG002.novaseq.pcr-free.35x.R2.fastq.gz",
+	"gbz" : "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/test_samples_vg_1.66/runs_toil_slurm_ec1M/HG002.novaseq.pcr-free/analysis/haplotype_sampling_customized_outputs/HG002.novaseq.pcr-free.hap_num_32.gbz",
+	"sample_name" : "HG002.novaseq.pcr-free",
+	"output_dir" : "/private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_ec1M.vg_1.66/HG002_illumina",
+	"output_suffix" : "graph_v2.0_eval.ec1M.vg_1.66",
+	"vg_bin" : "/private/groups/patenlab/masri/apps/vg_1.66/vg",
+	"options" : " "
+}

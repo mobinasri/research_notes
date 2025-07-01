@@ -1,0 +1,5 @@
+sample_id,gbz
+hprc-v2.0-mc-grch38-eval.clip.1000000.2,/private/home/ghickey/dev/work/hybrid-clip/out.1000000.2/hprc-v2.0-mc-grch38-eval.clip.1000000.2.gbz
+hprc-v2.0-mc-chm13-eval.clip.1000000.2,/private/home/ghickey/dev/work/hybrid-clip/out.1000000.2/hprc-v2.0-mc-chm13-eval.clip.1000000.2.gbz
+hprc-v2.0-mc-grch38-eval.ec1M,/private/groups/cgl/hprc-graphs/hprc-v2.0-feb28/snarl-filtering/hprc-v2.0-mc-grch38-eval.ec1M.gbz
+hprc-v2.0-mc-chm13-eval.ec1M,/private/groups/cgl/hprc-graphs/hprc-v2.0-feb28/snarl-filtering/hprc-v2.0-mc-chm13-eval.ec1M.gbz

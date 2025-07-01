@@ -1,0 +1,6 @@
+input,type,value
+RemoveSampleFromGraph.IN_GBZ_FILE,scalar,$input.gbz
+RemoveSampleFromGraph.CREATE_INDEX_OPTIONS,scalar,"--snarl-limit 1"
+RemoveSampleFromGraph.SAMPLE_NAME_TO_REMOVE,scalar,"CHM13"
+RemoveSampleFromGraph.CORES,scalar,16
+RemoveSampleFromGraph.DOCKER_IMAGE,scalar,"quay.io/vgteam/vg:v1.66.0"
