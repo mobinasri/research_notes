@@ -1,0 +1,12 @@
+{
+	"bam" : "/private/groups/patenlab/masri/dragen_v4.3/output/HG002_40x.bam", 
+	"pangenome" : "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/test_samples_vg_1.66/runs_toil_slurm_ec1M/HG002.novaseq.pcr-free/analysis/haplotype_sampling_customized_outputs/HG002.novaseq.pcr-free.hap_num_32.gbz",
+	"model_ckpt" : "/private/groups/patenlab/masri/apps/bash_scripts/png_aware_dv_models/hap_32/checkpoint-179200-0.98890-1",
+	"threads" : "64",
+	"bin_version" : "pangenome_aware_deepvariant-1.9.0",
+	"reference_fasta" : "/private/groups/patenlab/masri/apps/reference/GRCh38_no_alt_analysis_set.fasta",
+	"output_prefix" : "HG002.novaseq.pcr-free.graph_v2.0_eval.ec1M.dragen_v4.3.hap_32_head737001992",
+	"output_dir" : "/private/groups/patenlab/masri/dragen_v4.3/output/run_png_aware_dv/hap_32",
+	"mount_dir" : "/private/groups/patenlab/masri",
+	"pangenome_height" : "37"
+}
