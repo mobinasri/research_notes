@@ -108,13 +108,28 @@ toil-wdl-runner '#workflow/github.com/vgteam/vg_wdl/Giraffe:master' \
 Note: I used `vg-v1.66` for haplotype sampling above, which is different from the version Adam used for mapping.
 
 
+Next I removed `GRCh38#0#` prefix from the contig names and sorted the new bam file:
+```
+cd /private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_sep8.vg_1.68/HG002_illumina
+
+INBAM="/private/groups/patenlab/anovak/trash/for-mobin/out/Giraffe.mergeBAM/HG002_merged.positionsorted.bam"
+BAM=HG003.novaseq.pcr-free.35x.graph_v2_sep8.hap32_to_dip.vg-1.68.0.bam
+time samtools view -h $INBAM | sed -e "s/GRCh38#0#//g" | samtools sort --threads 12 -m 2G -O BAM > ${BAM}
+# Index the BAM.
+samtools index -@10 ${BAM}
+```
+Copied them to gcp (Note: they are moved later to the Google internal bucket, `gs://brain-genomics` ):
+```
+gs://pepper-deepvariant/mobinasri/pangenome_paper/graph_v2_sep8_mc_grch38_eval/HG002/illumina/AdamN_mappings/
+```
+
 Next I ran pangenome-aware DV with this json file
 ```
 cd /private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_sep8.vg_1.68/HG002_illumina_AdamNovak/run_png_aware_dv/hap_32
 
 cat pangenome_aware_deepvariant.inputs.json
 {
-	"bam" : "/private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_sep8.vg_1.68/HG002_illumina/HG003.novaseq.pcr-free.35x.graph_v2_sep8.hap32_to_dip.vg-1.68.0.bam", 
+	"bam" : "/private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_sep8.vg_1.68/HG002_illumina/HG002.novaseq.pcr-free.35x.graph_v2_sep8.hap32_to_dip.vg-1.68.0.bam", 
 	"pangenome" : "/private/groups/patenlab/masri/haplotype_sampling/graph_v2.0/test_samples_vg_1.66/runs_toil_slurm_graph_v2_sep28_GRCh38_eval/HG002.novaseq.pcr-free/analysis/haplotype_sampling_customized_outputs/HG002.novaseq.pcr-free.hap_num_32.gbz",
 	"model_ckpt" : "/private/groups/patenlab/masri/apps/bash_scripts/png_aware_dv_models/hap_32/checkpoint-179200-0.98890-1",
 	"threads" : "64",
@@ -126,3 +141,28 @@ cat pangenome_aware_deepvariant.inputs.json
 	"pangenome_height" : "37"
 }
 ```
+
+### Happy results:
+I ran `bash_scripts/happy.bash` with this josn for evaluating the output calls:
+```
+{
+	"truth_vcf" : "/private/groups/patenlab/masri/apps/bash_scripts/truth_vcf/t2t-v1.1/GRCh38_HG2-T2TQ100-V1.1_smvar_dipcall-z2k.vcf.gz", 
+	"truth_conf_bed" : "/private/groups/patenlab/masri/apps/bash_scripts/truth_vcf/t2t-v1.1/GRCh38_HG2-T2TQ100-V1.1_smvar.benchmark.bed",
+	"query_vcf" : "/private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_sep8.vg_1.68/HG002_illumina/run_png_aware_dv/hap_32/HG002.novaseq.pcr-free.graph_v2.0_eval.sep8.vg_1.68.hap_32_head737001992.vcf.gz",
+	"reference_fasta" : "/private/groups/patenlab/masri/apps/reference/GRCh38_no_alt_analysis_set.fasta",
+	"output_prefix" : "HG002.novaseq.pcr-free.graph_v2.0_eval.sep8.vg_1.68.hap_32_head737001992",
+	"output_dir" : "/private/groups/patenlab/masri/haplotype_sampling/map_short_reads_graph_v2_sep8.vg_1.68/HG002_illumina/run_png_aware_dv/hap_32/happy/t2t_conf",
+	"mount_dir" : "/private/groups/patenlab/masri",
+	"gender" : "male",
+	"threads" : "16"
+}
+```
+
+Here are the results:
+
+| Type  | TRUTH.TP | TRUTH.FN | QUERY.FP | FP.gt | FP.al | METRIC.Recall | METRIC.Precision | METRIC.F1_Score |
+| ----- | -------- | -------- | -------- | ----- | ----- | ------------- | ---------------- | --------------- |
+| INDEL | 831578   | 35730    | 20021    | 13540 | 5931  | 0.958804      | 0.978221         | 0.968415        |
+| SNP   | 3630158  | 24124    | 8981     | 4100  | 3646  | 0.993398      | 0.997522         | 0.995456        |
+
+We have ~88.8k errors in total, which is about ~12k better than the results based on graph-v1.1 that we reported in the pangenome-aware DV perprint.
