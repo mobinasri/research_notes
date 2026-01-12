@@ -1,4 +1,4 @@
-# Showing that pangenome-aware DeepVariant is able to call rare variants (AF < 0.01)
+# Rare variant analysis for pangenome-aware DeepVariant (population allele frequency < 0.01)
 
 Some reviewers criticized that pangenome-aware DV is biased toward the pangenome that it takes as input, and that the model is skeptical of true rare variants absent from the pangenome. 
 Here, we want to show that pangenome-aware DV and linear-reference-based DV are comparable in terms of calling rare variants.
@@ -50,5 +50,15 @@ gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chrY.vcf.gz
 ```
 
 Since the size of each chromosome-specifc VCF file was huge we process 4 files at a time with the script `run_filter_hom_ref.bash`. It downloads 4 VCF files at a time (by using `xargs -P 4`) and then pass each downloaded VCF file to the script `filter_hom_ref.py`. `filter_hom_ref.py` will parse the input VCF file and extract the records with at least one non-ref allele among 5 HPRC-R2 samples (`HG01255`,`HG02280`,`HG02984`,`HG03831`,`HG04184`). The list of the samples can be passed to `filter_hom_ref.py` using the `--samples` parameter. The output VCF file which is much smaller than the input file will be saved into the path given to `--output`. Both `filter_hom_ref.py` and its bash wrapper script `run_filter_hom_ref.bash` are available under the `scripts/` folder. 
+
+The output vcf files containing non-ref records for the 5 HPRC-R2 samples were then merged into a single vcf file which is available via these s3 links:
+```
+https://s3-us-west-2.amazonaws.com/human-pangenomics/submissions/1d4e5127-0bd2-4858-baaf-514c724a925a--PANGENOME_AWARE_DEEPVARIANT/1kg_rare_variant_analysis/all_chroms.1kg_cohort.vg.linear_ref_based_dv.grch38.5_HPRC_samples.with_non_ref_allele.sorted.vcf.gz
+https://s3-us-west-2.amazonaws.com/human-pangenomics/submissions/1d4e5127-0bd2-4858-baaf-514c724a925a--PANGENOME_AWARE_DEEPVARIANT/1kg_rare_variant_analysis/all_chroms.1kg_cohort.vg.linear_ref_based_dv.grch38.5_HPRC_samples.with_non_ref_allele.sorted.vcf.gz.tbi
+```
+
+## Finding rare variants and making sample-specific vcf files
+
+In the vcf file created in the previous step `all_chroms.1kg_cohort.vg.linear_ref_based_dv.grch38.5_HPRC_samples.with_non_ref_allele.sorted.vcf.gz` there is a column named `AF` which contains the population allele frequency based on the original linear-ref-based DV calls for 1KG samples. We wrote a script named `extract_rare_variants_per_sample.py` that uses this column to filter records with at least one allele whose AF is lower than 0.01 (Note that there might be multiple alternative alleles )
 
  
