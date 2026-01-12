@@ -15,3 +15,40 @@ Using these data, we will perform the following steps:
 - Filter out rare variants not supported by assembly-based Dipcall call sets. This filtering may not be easy if we include indels and complex regions, but we can use hap.py for this comparison.
   For example, we can pass DV calls as the query and the Dipcall set as the truth and extract only TP calls.
 - After obtaining those confident rare variants for the five samples, compare pangenome-aware DV calls against them and report the recall rate.
+
+
+## Downloading and extracting records for 5 HPRC-R2 samples from 1KG linear-ref-based DV VCF 
+
+We ran linear-ref-based DV on 1KG samples and they were merged into a single VCF file per chromosome. They are available here
+```
+gsutil ls gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/
+
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr1.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr10.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr11.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr12.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr13.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr14.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr15.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr16.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr17.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr18.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr19.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr2.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr20.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr21.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr22.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr3.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr4.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr5.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr6.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr7.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr8.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chr9.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chrX.vcf.gz
+gs://brain-genomics-public/research/cohort/1KGP/vg/dv_grch38/chrY.vcf.gz
+```
+
+Since the size of each chromosome-specifc VCF file was huge we process 4 files at a time with the script `run_filter_hom_ref.bash`. It downloads 4 VCF files at a time (by using `xargs -P 4`) and then pass each downloaded VCF file to the script `filter_hom_ref.py`. `filter_hom_ref.py` will parse the input VCF file and extract the records with at least one non-ref allele among 5 HPRC-R2 samples (`HG01255`,`HG02280`,`HG02984`,`HG03831`,`HG04184`). The list of the samples can be passed to `filter_hom_ref.py` using the `--samples` parameter. The output VCF file which is much smaller than the input file will be saved into the path given to `--output`. Both `filter_hom_ref.py` and its bash wrapper script `run_filter_hom_ref.bash` are available under the `scripts/` folder. 
+
+ 
