@@ -59,6 +59,78 @@ https://s3-us-west-2.amazonaws.com/human-pangenomics/submissions/1d4e5127-0bd2-4
 
 ## Finding rare variants and making sample-specific vcf files
 
-In the vcf file created in the previous step `all_chroms.1kg_cohort.vg.linear_ref_based_dv.grch38.5_HPRC_samples.with_non_ref_allele.sorted.vcf.gz` there is a column named `AF` which contains the population allele frequency based on the original linear-ref-based DV calls for 1KG samples. We wrote a script named `extract_rare_variants_per_sample.py` that uses this column to filter records with at least one allele whose AF is lower than 0.01 (Note that there might be multiple alternative alleles )
+In the vcf file created in the previous step `all_chroms.1kg_cohort.vg.linear_ref_based_dv.grch38.5_HPRC_samples.with_non_ref_allele.sorted.vcf.gz` there is a column named `AF` which contains the population allele frequency based on the original linear-ref-based DV calls for 1KG samples. We wrote a script named `extract_rare_variants_per_sample.py` that uses this column to keep the records with at least one allele whose AF is lower than 0.01 which was given to the `--af-threshold` parameter (Note that there might be multiple alternative alleles for each record and not all of them are neccessarily related to each sample). We ran the following command for rare variant extraction:
+
+```
+mkdir rare_variants
+python3 extract_rare_variants_per_sample.py \
+    --input all_chroms.1kg_cohort.vg.linear_ref_based_dv.grch38.5_HPRC_samples.with_non_ref_allele.sorted.vcf.gz \
+    --output-dir rare_variants \
+    --samples HG01255,HG02280,HG02984,HG03831,HG04184 \
+    --af-threshold 0.01
+```
+
+The output sample-specific vcf files are available in this s3 folder:
+```
+https://s3-us-west-2.amazonaws.com/human-pangenomics/index.html?prefix=submissions/1d4e5127-0bd2-4858-baaf-514c724a925a--PANGENOME_AWARE_DEEPVARIANT/1kg_rare_variant_analysis/rare_variants/
+```
+
+## Benchmarking rare variants against the assembly-based call sets (created with Dipcall)
+
+In order to make sure that the rare variants detected in the previous step are reliable we benchmark them against the assembly-based call sets that were created by mapping HPRC-R2 hifiasm assemblies to GRCh38 and running Dipcall. We then extracted only the true positives to be used as the reliable calls. The document that describes the generation of assembly-based call sets is available here: https://github.com/mobinasri/research_notes/tree/main/DeepVariant_Pangenome/Assembly_Based_Truth_Set_HPRC_R2 
+
+For benchmarking the rare variants against the assembly-based call sets we used [happy](https://github.com/Illumina/hap.py). The output happy vcf file is then filtered to contain only the TP calls and saved into files with `.TP.vcf.gz` suffix. The happy files are available in this s3 folder:
+```
+https://s3-us-west-2.amazonaws.com/human-pangenomics/index.html?prefix=submissions/1d4e5127-0bd2-4858-baaf-514c724a925a--PANGENOME_AWARE_DEEPVARIANT/1kg_rare_variant_analysis/compare_dipcall_truth/
+```
+
+## Benchmarking pangenome-aware DV calls against confident rare variants (For computing recall rate)
+
+The pangenome-aware DV calls are downloaded via these gs links:
+```
+cd /private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/benchmark_pangenome_aware_dv/vcf_files
+
+for i in HG01255 HG02280 HG02984 HG03831 HG04184;do
+gsutil cp gs://brain-genomics-public/research/cohort/1KGP/vg/pangenome_aware_to_grch38_vcf/pangenome_aware_dv_output/$i.vcf.gz .
+gsutil cp gs://brain-genomics-public/research/cohort/1KGP/vg/pangenome_aware_to_grch38_vcf/pangenome_aware_dv_output/$i.vcf.gz.tbi .
+done
+```
+
+Here we make a template input json file with two placeholders `SAMPLE_PLACEHOLDER` and `GENDER_PLACEHOLDER`
+```
+{
+	"truth_vcf" : "/private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/compare_dipcall_truth/SAMPLE_PLACEHOLDER/SAMPLE_PLACEHOLDER_hprc_v2.rare_af_lt_0.01.against_dipcall_truth_set.TP.vcf.gz", 
+	"truth_conf_bed" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_GRCh38/SAMPLE_PLACEHOLDER/SAMPLE_PLACEHOLDER_hprc_r2_v1.0.1_dipcall_GRCh38.dip.bed",
+	"query_vcf" : "/private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/benchmark_pangenome_aware_dv/vcf_files/SAMPLE_PLACEHOLDER.vcf.gz",
+	"reference_fasta" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/GRCh38/hs38.fa",
+	"output_prefix" : "SAMPLE_PLACEHOLDER.pangenome_aware_dv_vs_conf_rare",
+	"output_dir" : "/private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/",
+	"stratification_tsv" : "",
+	"mount_dir" : "/private/groups/patenlab/masri",
+	"threads" : "16",
+	"gender" : "GENDER_PLACEHOLDER"
+}
+```
+
+
+Make input json files:
+```
+mkdir input_jsons
+declare -A sampletosex=( ["HG01255"]="male" ["HG02280"]="female"  ["HG02984"]="male"  ["HG03831"]="female"  ["HG04184"]="female" )
+
+for i in HG01255 HG02280 HG02984 HG03831 HG04184;do
+  sed -e s@SAMPLE_PLACEHOLDER@$i@g  -e s@GENDER_PLACEHOLDER@${sampletosex[$i]}@g happy.inputs.json > input_jsons/happy.inputs.$i.json
+  mkdir -p $i
+done
+```
+
+Run hap.py
+```
+for i in HG01255 HG02280 HG02984 HG03831 HG04184;do
+  sbatch /private/groups/patenlab/masri/apps/bash_scripts/happy.bash input_jsons/happy.inputs.$i.json
+done
+
+```
+
 
  
