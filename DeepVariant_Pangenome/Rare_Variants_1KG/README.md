@@ -147,5 +147,45 @@ done
 
 ```
 
+## Results
 
- 
+I just report the part related to recall rates since precision and f1-scores does not mean anything in this analysis. The recall rate is between 95% to 99% which means that the majority of 
+the confident rare variants detected by linear-ref-based DV are being called by pangenome-aware DV so using pangenome is not affecting its performance on rare variants.
+
+
+### HG01255
+| Type  | Filter | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ----- | ------ | ----------- | -------- | -------- | ------------- |
+| INDEL | ALL    | 19249       | 18424    | 825      | 0.957141      |
+| SNP   | ALL    | 103628      | 102199   | 1429     | 0.98621       |
+
+
+
+### HG02280
+| Type  | Filter | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ----- | ------ | ----------- | -------- | -------- | ------------- |
+| INDEL | ALL    | 54276       | 52654    | 1622     | 0.970116      |
+| SNP   | ALL    | 272294      | 269004   | 3290     | 0.987917      |
+
+
+
+### HG02984
+| Type  | Filter | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ----- | ------ | ----------- | -------- | -------- | ------------- |
+| INDEL | ALL    | 54979       | 53139    | 1840     | 0.966533      |
+| SNP   | ALL    | 264986      | 261961   | 3025     | 0.988584      |
+
+
+### HG03831
+| Type  | Filter | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ----- | ------ | ----------- | -------- | -------- | ------------- |
+| INDEL | ALL    | 21184       | 20349    | 835      | 0.960583      |
+| SNP   | ALL    | 118226      | 116193   | 2033     | 0.982804      |
+
+
+### HG04184
+| Type  | Filter | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ----- | ------ | ----------- | -------- | -------- | ------------- |
+| INDEL | ALL    | 21358       | 20401    | 957      | 0.955192      |
+| SNP   | ALL    | 118963      | 116447   | 2516     | 0.978851      |
+
