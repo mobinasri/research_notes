@@ -112,7 +112,7 @@ done
 Here we make a template input json file with two placeholders `SAMPLE_PLACEHOLDER` and `GENDER_PLACEHOLDER`
 ```
 {
-	"truth_vcf" : "/private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/compare_dipcall_truth/SAMPLE_PLACEHOLDER/SAMPLE_PLACEHOLDER_hprc_v2.rare_af_lt_0.01.against_dipcall_truth_set.TP.vcf.gz", 
+	"truth_vcf" : "/private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/compare_dipcall_truth/SAMPLE_PLACEHOLDER/SAMPLE_PLACEHOLDER_hprc_v2.rare_af_lt_0.01.against_dipcall_truth_set.TP.TRUTH_only.vcf.gz", 
 	"truth_conf_bed" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/dipcall_results_GRCh38/SAMPLE_PLACEHOLDER/SAMPLE_PLACEHOLDER_hprc_r2_v1.0.1_dipcall_GRCh38.dip.bed",
 	"query_vcf" : "/private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/benchmark_pangenome_aware_dv/vcf_files/SAMPLE_PLACEHOLDER.vcf.gz",
 	"reference_fasta" : "/private/groups/patenlab/masri/internship/assembly_truth_sets/GRCh38/hs38.fa",
