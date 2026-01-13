@@ -79,12 +79,25 @@ https://s3-us-west-2.amazonaws.com/human-pangenomics/index.html?prefix=submissio
 
 In order to make sure that the rare variants detected in the previous step are reliable we benchmark them against the assembly-based call sets that were created by mapping HPRC-R2 hifiasm assemblies to GRCh38 and running Dipcall. We then extracted only the true positives to be used as the reliable calls. The document that describes the generation of assembly-based call sets is available here: https://github.com/mobinasri/research_notes/tree/main/DeepVariant_Pangenome/Assembly_Based_Truth_Set_HPRC_R2 
 
-For benchmarking the rare variants against the assembly-based call sets we used [happy](https://github.com/Illumina/hap.py). The output happy vcf file is then filtered to contain only the TP calls and saved into files with `.TP.vcf.gz` suffix. The happy files are available in this s3 folder:
+For benchmarking the rare variants against the assembly-based call sets we used [happy](https://github.com/Illumina/hap.py). The output happy vcf file is then filtered to contain only the TP calls and saved into files with `.TP.vcf.gz` suffix. To be able to use these files later as the truth set for hap.py we removed the `QUERY` column from them and saved into files with files with `TP.TRUTH_only.vcf.gz` suffix. 
+```
+cd /private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/compare_dipcall_truth
+
+for i in HG01255 HG02280 HG02984 HG03831 HG04184;do
+    bcftools view \
+        -s TRUTH ${i}/${i}_hprc_v2.rare_af_lt_0.01.against_dipcall_truth_set.TP.vcf.gz \
+        -Oz \
+        -o ${i}/${i}_hprc_v2.rare_af_lt_0.01.against_dipcall_truth_set.TP.TRUTH_only.vcf.gz
+    tabix ${i}/${i}_hprc_v2.rare_af_lt_0.01.against_dipcall_truth_set.TP.TRUTH_only.vcf.gz
+done
+```
+
+The happy files are available in this s3 folder:
 ```
 https://s3-us-west-2.amazonaws.com/human-pangenomics/index.html?prefix=submissions/1d4e5127-0bd2-4858-baaf-514c724a925a--PANGENOME_AWARE_DEEPVARIANT/1kg_rare_variant_analysis/compare_dipcall_truth/
 ```
 
-## Benchmarking pangenome-aware DV calls against confident rare variants (For computing recall rate)
+## Benchmarking pangenome-aware DV calls against confident rare variants for computing recall rates
 
 The pangenome-aware DV calls are downloaded via these gs links:
 ```
@@ -115,7 +128,9 @@ Here we make a template input json file with two placeholders `SAMPLE_PLACEHOLDE
 
 Make input json files:
 ```
-mkdir input_jsons
+cd /private/groups/patenlab/masri/haplotype_sampling/pangenome_aware_dv_paper/1KG_analysis/linear_ref_based_dv/5_HPRC_samples/benchmark_pangenome_aware_dv
+
+mkdir -p input_jsons
 declare -A sampletosex=( ["HG01255"]="male" ["HG02280"]="female"  ["HG02984"]="male"  ["HG03831"]="female"  ["HG04184"]="female" )
 
 for i in HG01255 HG02280 HG02984 HG03831 HG04184;do
