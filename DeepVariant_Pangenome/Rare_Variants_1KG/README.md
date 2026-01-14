@@ -189,3 +189,56 @@ the confident rare variants detected by linear-ref-based DV are being called by 
 | INDEL | ALL    | 21358       | 20401    | 957      | 0.955192      |
 | SNP   | ALL    | 118963      | 116447   | 2516     | 0.978851      |
 
+
+## An alternative approach (Compare everything to linear-ref-based DV)
+
+Here, we use the linear-reference-based DV call set as the truth and compare the pangenome-aware DV and Dipcall-based call sets against this truth set. We assume that the Dipcall-based call set is more reliable since it is derived from hifiasm assemblies. Our initial goal was to assess whether the recall rates for pangenome-aware DV are comparable to those of the Dipcall-based call set. The results show that the recall rate for InDels are higher for pangenome-aware DV than for Dipcall. For SNPs they are more comparable. This indicates that we are not losing sensitivity in calling rare variants in DeepVariant by using a pangenome. It also suggests that some InDel errors are shared between the two DV call sets regardless of the use of a pangenome, which is expected since both rely on short-read data and are inherently less accurate than assembly-based approaches.
+
+### HG01255
+
+| Method             | Type  | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ------------------ | ----- | ----------- | -------- | -------- | ------------- |
+| pangenome-aware DV | INDEL | 24847       | 22179    | 2668     | 0.892623      |
+| pangenome-aware DV | SNP   | 109347      | 105581   | 3766     | 0.965559      |
+| Dipcall            | INDEL | 24841       | 19027    | 5814     | 0.765951      |
+| Dipcall            | SNP   | 109331      | 102974   | 6357     | 0.941855      |
+
+
+### HG02280
+
+| Method             | Type  | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ------------------ | ----- | ----------- | -------- | -------- | ------------- |
+| pangenome-aware DV | INDEL | 63309       | 58865    | 4444     | 0.929805      |
+| pangenome-aware DV | SNP   | 275873      | 269622   | 6251     | 0.977341      |
+| Dipcall            | INDEL | 63301       | 54848    | 8453     | 0.866463      |
+| Dipcall            | SNP   | 275828      | 270891   | 4937     | 0.982101      |
+
+### HG02984
+
+| Method             | Type  | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ------------------ | ----- | ----------- | -------- | -------- | ------------- |
+| pangenome-aware DV | INDEL | 66423       | 61495    | 4928     | 0.925809      |
+| pangenome-aware DV | SNP   | 278522      | 271615   | 6907     | 0.975201      |
+| Dipcall            | INDEL | 66416       | 55349    | 11067    | 0.833368      |
+| Dipcall            | SNP   | 278466      | 263658   | 14808    | 0.946823      |
+
+### HG03831
+
+| Method             | Type  | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ------------------ | ----- | ----------- | -------- | -------- | ------------- |
+| pangenome-aware DV | INDEL | 26851       | 24387    | 2464     | 0.908234      |
+| pangenome-aware DV | SNP   | 120152      | 116704   | 3448     | 0.971303      |
+| Dipcall            | INDEL | 26846       | 21143    | 5703     | 0.787566      |
+| Dipcall            | SNP   | 120142      | 117540   | 2602     | 0.978342      |
+
+
+### HG04184
+
+| Method             | Type  | TRUTH.TOTAL | TRUTH.TP | TRUTH.FN | METRIC.Recall |
+| ------------------ | ----- | ----------- | -------- | -------- | ------------- |
+| pangenome-aware DV | INDEL | 27535       | 24752    | 2783     | 0.898929      |
+| pangenome-aware DV | SNP   | 121583      | 117147   | 4436     | 0.963515      |
+| Dipcall            | INDEL | 27533       | 21361    | 6172     | 0.775833      |
+| Dipcall            | SNP   | 121576      | 118317   | 3259     | 0.973194      |
+
+
