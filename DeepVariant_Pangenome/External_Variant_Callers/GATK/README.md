@@ -1,5 +1,6 @@
 # Run GATK on HG003 Novaseq 35x in four modes (3 modes of GATK-v4.6 + 1 mode of GATK-v3)
-
+### Note: For 40x NovaSeq data we used the same commands
+ 
 This doc contains wdls for running GATK. The wdls were updated last time with GATKv4.6.0
 https://broadinstitute.github.io/warp/docs/Pipelines/Whole_Genome_Germline_Single_Sample_Pipeline/README/
 
