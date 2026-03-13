@@ -17,7 +17,7 @@ The average improvement for Mendelian error rate was 4.70% and the largest one w
 
 Below we provide a summary of all the steps we performed in the jupyter notebook
 
-#### Select 20 random 1KG trios
+#### Selecting 20 random 1KG trios
 
 The information for all pedigrees in 1KG are available through this link:
 https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000G_2504_high_coverage/working/1kGP.3202_samples.pedigree_info.txt
@@ -79,4 +79,7 @@ For chr1 to 11 samples don't have that ERR prefix but for the rest of the chromo
 As mentioned in the jupyter notebook the names are standardized by removing that "ERRXXXX_" before doing the analysis.
 
 
-### 
+### Computing Mendelian consistency
+We parsed the 60-sample vcf files in the notebook using cyvcf2 library and iterated over the variants with at least 
+one non-ref allele among the samples in each trio. The tables with results are available in the following links:
+
