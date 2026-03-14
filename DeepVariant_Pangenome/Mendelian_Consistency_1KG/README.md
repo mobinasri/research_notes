@@ -8,10 +8,10 @@ For trios with female child we excluded chromosome Y and for the male ones we ex
 All variants with at least one non-reference allele in a sample per trio were included for the analysis. 
 For example it might be a hom-ref variant (gt=0/0) in child but a non-hom-ref call in a parent, which would be counted as an error.
 
-For all 20 trios, number of Mendelian errors decreased when pangenome-aware DV was used with an average of 5.24% reduction in errors over linear-ref-based DV. 
-The largest improvement was observed the HG02584's trio with 8.79% reduction in the number of errors.
+For all 20 trios, number of Mendelian errors decreased when pangenome-aware DV was used with an average of 5.24% and 7.9% reduction in SNP and InDel errors over linear-ref-based DV. 
+The largest improvement was observed the HG02584's trio with 8.79% and 12.69% reduction in the number of SNP and InDel errors.
 We also computed Medelian error rates by diving error counts by the total number of variants.
-The average improvement for Mendelian error rate was 4.70% and the largest one was observed in HG02584's trio with 8.20% reduction in error rate.
+The average improvement for Mendelian error rates were 6.17% and 9.53% for SNPs and InDels respectively and the largest rates were observed in HG02584's trio with 9.55% and 13.93% reduction in SNP and InDel error rates.
 
 ## Analysis steps
 
@@ -83,3 +83,6 @@ As mentioned in the jupyter notebook the names are standardized by removing that
 We parsed the 60-sample vcf files in the notebook using cyvcf2 library and iterated over the variants with at least 
 one non-ref allele among the samples in each trio. The tables with results are available in the following links:
 
+SNP-based: https://docs.google.com/spreadsheets/d/1KDIC3qUzqsCc368-qfyyFdjaAKZPQCAFmJYXZ98SuGg/edit?gid=1311730372#gid=1311730372
+
+InDel-based: https://docs.google.com/spreadsheets/d/1POWVgSJknnASNlgr257Q2NTniSpo78V85pwjLKuz9RU/edit?gid=277127291#gid=277127291
