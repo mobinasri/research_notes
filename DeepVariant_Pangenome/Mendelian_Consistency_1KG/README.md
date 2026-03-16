@@ -15,7 +15,7 @@ The average improvement for Mendelian error rates were 6.17% and 9.53% for SNPs 
 
 ## Analysis steps
 
-Below we provide a summary of all the steps we performed in the jupyter notebook.
+Below we provide a summary of all the steps we performed in [the jupyter notebook that was used for this analysis.](https://github.com/mobinasri/research_notes/blob/main/DeepVariant_Pangenome/Mendelian_Consistency_1KG/scripts/1KG_Trio_Analysis.ipynb)
 
 #### Selecting 20 random 1KG trios
 
@@ -81,6 +81,9 @@ As mentioned in the jupyter notebook the names are standardized by removing that
 
 ### Computing Mendelian consistency
 We parsed the 60-sample vcf files in the notebook using cyvcf2 library and iterated over the variants with at least 
-one non-ref allele among the samples in each trio. We created two tables; one for SNPs and one for InDels, which are available in the following link:
+one non-ref allele among the samples in each trio. The code is available in this notebook:
+https://github.com/mobinasri/research_notes/blob/main/DeepVariant_Pangenome/Mendelian_Consistency_1KG/scripts/1KG_Trio_Analysis.ipynb
+
+We created two tables with the Menedelian stats; one for SNPs and one for InDels, which are available in the following link:
 
 https://docs.google.com/spreadsheets/d/1KDIC3qUzqsCc368-qfyyFdjaAKZPQCAFmJYXZ98SuGg/edit?gid=367147034#gid=367147034
